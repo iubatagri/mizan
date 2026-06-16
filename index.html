@@ -42,6 +42,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tab-btn.active{color:#3B6D11;border-bottom-color:#3B6D11;}
 .tab-btn.locked{color:#BCBCB8;cursor:pointer;}
 
+/* PREMIUM PLANNER STYLING CONTROLS */
+.planner-wrapper-premium {width:100%;height:calc(100vh - 200px);min-height:580px;border-radius:14px;overflow:hidden;background:#ffffff;border:1px solid #E0E0DA;box-shadow:0 4px 12px rgba(0,0,0,0.03);}
+.planner-iframe-premium {width:100%;height:100%;border:none;display:block;}
+
 /* MAIN */
 .main{max-width:700px;margin:0 auto;padding:1.25rem .875rem 3rem;}
 .tab-view{display:none;}
@@ -173,7 +177,6 @@ input:focus{border-color:#3B6D11;background:#fff;}
 </head>
 <body>
 
-<!-- LOADING -->
 <div id="loading">
   <div class="ld-box">
     <div class="ld-leaf">&#127806;</div>
@@ -184,7 +187,6 @@ input:focus{border-color:#3B6D11;background:#fff;}
   </div>
 </div>
 
-<!-- APP -->
 <div id="app" style="display:none">
 
   <div class="reg-bar">
@@ -203,6 +205,7 @@ input:focus{border-color:#3B6D11;background:#fff;}
 
   <nav class="tab-nav">
     <button class="tab-btn active" id="nav-dashboard" onclick="showTab(this,'dashboard')">Dashboard</button>
+    <button class="tab-btn"        id="nav-planner"   onclick="showTab(this,'planner')">&#128197; Study Planner</button>
     <button class="tab-btn locked" id="nav-top20"     onclick="tryLockedTab(this,'top20')">&#128274; Top 20</button>
     <button class="tab-btn locked" id="nav-search"    onclick="tryLockedTab(this,'search')">&#128274; Check Your Position</button>
     <button class="tab-btn locked" id="nav-batches"   onclick="tryLockedTab(this,'batches')">&#128274; Top 10 in Each Batch</button>
@@ -210,20 +213,18 @@ input:focus{border-color:#3B6D11;background:#fff;}
 
   <main class="main">
 
-    <!-- DASHBOARD -->
     <div id="tab-dashboard" class="tab-view active">
       <p class="sec-lbl">Department Overview</p>
       <div class="stat-grid" id="stat-grid"></div>
       <p class="sec-lbl">CGPA Distribution</p>
       <div class="card" id="dist-chart"></div>
 
-      <!-- LOCK WALL (shown when not verified) -->
       <div id="verify-box" class="lock-wall">
         <div class="lock-wall-icon">&#128274;</div>
         <div class="lock-wall-title">Unlock Full Rankings</div>
         <div class="lock-wall-sub">Enter your registered Student ID and email to unlock Top 20, your position, and batch rankings.</div>
         <div class="verify-form">
-          <input class="v-input" type="text"  id="v-id"    placeholder="Student ID" autocomplete="off">
+          <input class="v-input" type="text"  id="v-id"     placeholder="Student ID" autocomplete="off">
           <input class="v-input" type="email" id="v-email" placeholder="Registered email" autocomplete="off">
           <button class="v-btn" id="v-btn" onclick="doVerify()">Verify &amp; Unlock</button>
           <div id="v-msg" class="v-msg-wrap"></div>
@@ -231,27 +232,31 @@ input:focus{border-color:#3B6D11;background:#fff;}
         <div class="v-register-hint">Not registered yet? <a href="register.html">Register here</a></div>
       </div>
 
-      <!-- VERIFIED BANNER (shown after unlock) -->
       <div id="verified-banner" class="verified-banner" style="display:none">
         <div class="vb-left">&#9989; Verified: <strong id="vb-name"></strong> &mdash; All tabs unlocked</div>
         <button class="vb-lock-btn" onclick="lockAll()">&#128274; Lock</button>
       </div>
     </div>
 
-    <!-- TOP 20 -->
+    <div id="tab-planner" class="tab-view">
+      <p class="sec-lbl">Personal Study Tracker &amp; Schedule</p>
+      <div class="planner-wrapper-premium">
+        <iframe id="planner-iframe-core" src="" class="planner-iframe-premium"></iframe>
+      </div>
+    </div>
+
     <div id="tab-top20" class="tab-view">
       <p class="sec-lbl">Top 20 Students &#8212; All Batches</p>
       <div class="card" id="lb-top20"></div>
     </div>
 
-    <!-- CHECK YOUR POSITION -->
     <div id="tab-search" class="tab-view">
       <p class="sec-lbl">Check Your Position</p>
       <div class="card">
         <div class="s-card-wrap">
           <p class="s-intro">Enter your Student ID and the email you used during registration.</p>
           <label class="f-lbl">Student ID</label>
-          <input type="text"  id="inp-id"    placeholder="e.g. 24209150" autocomplete="off">
+          <input type="text"  id="inp-id"     placeholder="e.g. 24209150" autocomplete="off">
           <label class="f-lbl">Email Address</label>
           <input type="email" id="inp-email" placeholder="your.email@example.com" autocomplete="off">
           <button class="s-btn" id="s-btn" onclick="doSearch()">Search Result</button>
@@ -261,7 +266,6 @@ input:focus{border-color:#3B6D11;background:#fff;}
       <div id="result-card"></div>
     </div>
 
-    <!-- BATCH TOP 10 -->
     <div id="tab-batches" class="tab-view">
       <p class="sec-lbl">Top 10 in Each Batch</p>
       <div class="b-tabs" id="b-tabs"></div>
@@ -277,7 +281,7 @@ input:focus{border-color:#3B6D11;background:#fff;}
 </div>
 
 <script>
-var API = 'https://script.google.com/macros/s/AKfycbzLxBpWlJA5uQYEUoBi6n3j8LEKL6L6_cOfK33b2JZEsIBvxj5bYTG5Kue9V4MTYq88tg/exec';
+var API = 'https://script.google.com/macros/s/AKfycbxoZKLYwKNpgX3DsBLWVRrrPDk4BghJ53dcFIo06wdY06C8whH7hSFpO7ppV444RRPD/exec';
 
 var DATA       = null;
 var isVerified = false;
@@ -348,6 +352,14 @@ function showTab(btn, id) {
   for (var i = 0; i < views.length; i++) views[i].classList.remove('active');
   btn.classList.add('active');
   document.getElementById('tab-' + id).classList.add('active');
+
+  // Lazy load implementation for the Study Planner iframe
+  if (id === 'planner') {
+    var coreFrame = document.getElementById('planner-iframe-core');
+    if (!coreFrame.src || coreFrame.src === "" || coreFrame.src === window.location.href) {
+      coreFrame.src = './planner.html';
+    }
+  }
 }
 
 function tryLockedTab(btn, id) {
@@ -496,8 +508,8 @@ function renderTop20(top20, total) {
 
 // BATCH RANKINGS
 function renderBatches(batchTops) {
-  var batches  = Object.keys(batchTops).sort();
-  var tabsEl   = document.getElementById('b-tabs');
+  var batches   = Object.keys(batchTops).sort();
+  var tabsEl    = document.getElementById('b-tabs');
   var panelsEl = document.getElementById('b-panels');
   tabsEl.innerHTML = ''; panelsEl.innerHTML = '';
   for (var bi = 0; bi < batches.length; bi++) {
