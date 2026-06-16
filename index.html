@@ -5,657 +5,523 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Study Planner — Agriculture Department Ranking Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Agriculture Department — Ranking Portal</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{-webkit-text-size-adjust:100%;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F4F5F0;color:#1A1A18;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F4F5F0;color:#1A1A18;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 
-/* HEADER MATCHING REGISTER/INDEX */
-.header{background:linear-gradient(135deg,#1E3D08,#3B6D11);padding:1.25rem 1rem;}
-.header-inner{max-width:520px;margin:0 auto;display:flex;align-items:center;gap:12px;}
-.header-icon{font-size:28px;}
-.header-title{font-size:18px;font-weight:700;color:#EAF3DE;}
-.header-sub{font-size:12px;color:#97C459;}
-.back-btn{margin-left:auto;background:rgba(255,255,255,.15);color:#EAF3DE;padding:6px 14px;border-radius:20px;text-decoration:none;font-size:12px;font-weight:700;border:1px solid rgba(255,255,255,.1);-webkit-tap-highlight-color:transparent;}
+/* LOADING */
+#loading{position:fixed;inset:0;background:linear-gradient(135deg,#1E3D08,#3B6D11);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s;}
+#loading.fade{opacity:0;pointer-events:none;}
+.ld-box{text-align:center;padding:2rem;}
+.ld-leaf{font-size:52px;margin-bottom:12px;animation:pulse 1.6s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+.ld-text{font-size:20px;font-weight:800;color:#fff;letter-spacing:0.5px;margin-bottom:4px;}
+.ld-sub{font-size:13px;color:#97C459;font-weight:500;}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#1E3D08,#3B6D11);padding:1.5rem 1rem 1.25rem;}
+.header-inner{max-width:520px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+.header-icon{font-size:36px;line-height:1;}
+.header-title{font-size:20px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:2px;}
+.header-sub{font-size:12px;color:#97C459;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
 
 /* MAIN WRAPPER */
-.main{max-width:520px;margin:0 auto;padding:1.25rem .875rem 3rem;}
-.card{background:#fff;border:1px solid #E0E0DA;border-radius:14px;overflow:hidden;margin-bottom:1rem;padding:20px;}
+.main{max-width:520px;margin:0 auto;padding:1rem .875rem 3rem;}
 
-/* SETUP CONTENT */
-.setup-headline { font-size: 22px; font-weight: 700; color: #1A1A18; line-height: 1.25; margin-bottom: 4px; }
-.setup-sub { font-size: 13px; color: #6B6B66; margin-bottom: 20px; }
+/* SECTIONS / VISIBILITY */
+.view-sec{display:none;}
+.view-sec.active{display:block;}
 
-.field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-.field-group label { font-size: 11px; font-weight: 600; color: #6B6B66; text-transform: uppercase; letter-spacing: 0.05em; }
+/* CARDS */
+.card{background:#fff;border:1px solid #E0E0DA;border-radius:14px;padding:1.25rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(26,26,24,0.02);}
+.sec-lbl{font-size:11px;font-weight:700;color:#9B9B96;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:block;}
 
-.preset-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
-.preset-btn {
-  padding: 6px 12px; background: #FAFAF8; border: 1px solid #D0D0CA; border-radius: 8px;
-  color: #6B6B66; cursor: pointer; font-size: 12px; font-weight: 600; transition: 0.2s;
-}
-.preset-btn:hover { background: #F4F5F0; }
-.preset-btn.active { background: #3B6D11; border-color: #3B6D11; color: #fff; }
+/* SEARCH PRESETS */
+.search-box{position:relative;margin-bottom:12px;}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:#9B9B96;pointer-events:none;}
+.search-input{width:100%;height:46px;background:#FAFAF8;border:1.5px solid #D0D0CA;border-radius:10px;padding:0 14px 0 38px;font-size:15px;color:#1A1A18;outline:none;transition:all .2s;-webkit-appearance:none;appearance:none;}
+.search-input:focus{background:#fff;border-color:#3B6D11;box-shadow:0 0 0 3px rgba(59,109,17,0.12);}
 
-input[type="date"], input[type="number"], input[type="text"] {
-  width: 100%; padding: 11px 13px; font-size: 15px; border: 1px solid #D0D0CA;
-  border-radius: 9px; background: #FAFAF8; color: #1A1A18; outline: none; -webkit-appearance: none; appearance: none;
-}
-input:focus { border-color: #3B6D11; background: #fff; }
+.presets{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:4px;margin-left:-2px;margin-right:-2px;scrollbar-width:none;}
+.presets::-webkit-scrollbar{display:none;}
+.preset-btn{background:#fff;border:1.5px solid #D0D0CA;border-radius:20px;padding:5px 13px;font-size:12px;font-weight:600;color:#6B6B66;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;}
+.preset-btn:active{transform:scale(0.96);}
+.preset-btn.active{background:#3B6D11;border-color:#3B6D11;color:#fff;}
 
-.divider { height: 1px; background: #E0E0DA; margin: 16px 0; }
+/* STATS MATRIX GRID */
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.matrix-box{background:#FAFAF8;border:1px solid #E0E0DA;border-radius:10px;padding:12px 14px;}
+.matrix-num{font-size:22px;font-weight:800;color:#1A1A18;font-family:-apple-system,BlinkMacSystemFont,monospace;line-height:1.2;margin-bottom:2px;}
+.matrix-lbl{font-size:11px;font-weight:600;color:#6B6B66;text-transform:uppercase;letter-spacing:0.3px;}
 
-.cat-label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.cat-label-row span { font-size: 11px; font-weight: 600; color: #6B6B66; text-transform: uppercase; }
-.cat-label-row .cat-count { font-family: 'JetBrains Mono', monospace; color: #9B9B96; font-size: 12px; }
+/* LEADERBOARD LIST */
+.list-container{display:flex;flex-direction:column;gap:8px;}
+.row-item{background:#fff;border:1px solid #E0E0DA;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .15s;}
+.row-item:active{background-color:#FAFAF8;}
 
-#category-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-.cat-row { display: grid; grid-template-columns: 2fr 2fr 1fr auto; gap: 8px; }
-.rm-btn {
-  width: 42px; height: 42px; border-radius: 9px; border: none;
-  background: #FEE2E2; color: #991B1B; cursor: pointer; font-size: 16px;
-  display: flex; align-items: center; justify-content: center; transition: 0.15s;
-}
-.rm-btn:hover { background: #991B1B; color: #fff; }
+/* RANKS */
+.rk{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;font-family:-apple-system,BlinkMacSystemFont,monospace;}
+.rk1{background:#FEF3C7;color:#92400E;font-size:18px;}
+.rk2{background:#F1F5F9;color:#475569;font-size:18px;}
+.rk3{background:#FFEDD5;color:#9A3412;font-size:18px;}
+.rkn{background:#F4F5F0;color:#6B6B66;}
 
-.add-cat {
-  padding: 11px; border-radius: 9px; border: 1px dashed #D0D0CA;
-  background: #FAFAF8; color: #6B6B66; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; text-align: center;
-}
-.add-cat:hover { background: #F4F5F0; color: #1A1A18; }
+.row-info{flex:1;min-width:0;}
+.row-meta{display:flex;align-items:center;gap:6px;margin-bottom:2px;}
+.row-name{font-size:15px;font-weight:700;color:#1A1A18;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.row-sub{font-size:12px;color:#6B6B66;font-weight:500;}
+.dot{color:#D0D0CA;font-size:10px;}
 
-.gen-btn {
-  width: 100%; padding: 13px; background: #3B6D11; color: #fff; border: none;
-  border-radius: 9px; font-size: 15px; font-weight: 700; cursor: pointer; transition: background .2s; margin-top: 10px;
-}
-.gen-btn:hover { background: #2E5E0E; }
+.row-right{text-align:right;}
+.row-cgpa{font-size:16px;font-weight:800;color:#1E3D08;font-family:-apple-system,BlinkMacSystemFont,monospace;line-height:1.2;}
+.row-pct{font-size:11px;color:#6B6B66;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,monospace;}
 
-/* ─── TRACKER VIEW ─── */
-#tracker-screen { display: none; flex-direction: column; }
+/* INDIVIDUAL PROFILE VIEW */
+.prof-header{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;}
+.prof-avatar{width:54px;height:54px;border-radius:50%;background:#EAF3DE;color:#3B6D11;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;}
+.prof-title-box{flex:1;min-width:0;}
+.prof-name{font-size:19px;font-weight:800;color:#1A1A18;line-height:1.25;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.prof-id{font-size:13px;color:#6B6B66;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,monospace;}
 
-/* Theme Dashboard Block */
-.dashboard-area { background: #3B6D11; color: #EAF3DE; padding: 16px; border-radius: 14px; margin-bottom: 16px; }
-.t-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.t-header-left { display: flex; align-items: center; gap: 10px; }
-.t-icon { font-size: 24px; }
-.t-title { font-size: 16px; font-weight: 700; color: #fff; }
-.t-started { font-size: 11px; color: #C0DD97; }
+.badge-band{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem;}
+.badge{background:#FAFAF8;border:1px solid #E0E0DA;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#1A1A18;}
+.badge strong{font-weight:700;color:#3B6D11;}
 
-.reset-btn {
-  background: rgba(255,255,255,.15); color: #EAF3DE; padding: 5px 12px; border-radius: 20px;
-  border: 1px solid rgba(255,255,255,.1); font-size: 11px; font-weight: 600; cursor: pointer;
-}
-.reset-btn:hover { background: rgba(255,255,255,.25); }
+/* STANDING INSIGHT BANNER */
+.standing-card{border-radius:12px;padding:12px 14px;margin-bottom:1.25rem;display:flex;gap:12px;align-items:flex-start;}
+.standing-card.Outstanding{background:#FEF3C7;border:1px solid #FCD34D;}
+.standing-card.Excellent{background:#E0F2FE;border:1px solid #7DD3FC;}
+.standing-card.Very{background:#ECFDF5;border:1px solid #6EE7B7;}
+.standing-card.Keep{background:#F4F5F0;border:1px solid #E0E0DA;}
 
-.dash-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-.dash-box { padding: 14px; background: rgba(0,0,0,0.15); border: 1px solid rgba(192,221,151,0.2); border-radius: 12px; }
+.st-icon{font-size:26px;line-height:1;margin-top:2px;}
+.st-text-box{flex:1;}
+.st-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:1px;}
+.Outstanding .st-lbl{color:#92400E;}
+.Excellent .st-lbl{color:#0369A1;}
+.Very .st-lbl{color:#047857;}
+.Keep .st-lbl{color:#6B6B66;}
+.st-desc{font-size:13px;font-weight:500;line-height:1.4;color:#1A1A18;}
 
-.overall-row { display: flex; gap: 16px; align-items: center; }
-.ring-wrap { position: relative; width: 64px; height: 64px; }
-.ring-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.ring-bg { fill: none; stroke: rgba(255,255,255,0.15); stroke-width: 8; }
-.ring-fill { fill: none; stroke: #C0DD97; stroke-width: 8; stroke-linecap: round; stroke-dasharray: 201; stroke-dashoffset: 201; transition: 0.5s; }
-.ring-lbl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #fff; }
+/* TRANSCRIPT SHEET TABLE */
+.table-wrap{border:1px solid #E0E0DA;border-radius:10px;overflow:hidden;margin-bottom:1.25rem;}
+table{width:100%;border-collapse:collapse;text-align:left;font-size:13.5px;}
+th{background:#FAFAF8;border-bottom:1px solid #E0E0DA;color:#6B6B66;font-weight:600;padding:8px 12px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
+td{padding:10px 12px;border-bottom:1px solid #F0F0EC;color:#1A1A18;}
+tr:last-child td{border-bottom:none;}
+.td-code{font-family:-apple-system,BlinkMacSystemFont,monospace;color:#6B6B66;font-weight:500;}
+.td-title{font-weight:600;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.td-cr{text-align:center;font-family:-apple-system,BlinkMacSystemFont,monospace;}
+.td-gp{text-align:right;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,monospace;}
 
-.overall-text { display: flex; flex-direction: column; }
-.o-lbl { font-size: 10px; color: #97C459; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.back-btn{display:block;width:100%;text-align:center;background:#1A1A18;color:#fff;border:none;border-radius:10px;height:44px;font-size:14px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .15s;}
+.back-btn:active{background:#333;}
 
-.days-stats { display: flex; flex-direction: column; gap: 10px; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 16px; margin-left: auto;}
-.day-stat { display: flex; align-items: center; gap: 8px; }
-.d-num { font-size: 18px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #fff; }
-.d-text { font-size: 10px; color: #C0DD97; font-weight: 600; text-transform: uppercase; }
+/* EMPTY / ERROR STATES */
+.error-state{text-align:center;padding:2.5rem 1rem;color:#6B6B66;}
+.error-icon{font-size:40px;margin-bottom:8px;}
+.error-title{font-size:16px;font-weight:700;color:#1A1A18;margin-bottom:4px;}
+.error-desc{font-size:13px;line-height:1.5;max-width:280px;margin:0 auto 12px;}
+.error-link{display:inline-block;background:#3B6D11;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;-webkit-tap-highlight-color:transparent;}
+.error-link:active{background:#2E5E0E;}
 
-.prog-title { font-size: 10px; color: #C0DD97; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 10px; text-transform: uppercase; margin-top: 14px; }
-.prog-list { display: flex; flex-direction: column; gap: 10px; }
-.prog-item { display: grid; grid-template-columns: 80px 1fr 35px; align-items: center; gap: 8px; }
-.p-name { font-size: 12px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.p-bar-wrap { height: 6px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
-.p-bar { height: 100%; border-radius: 4px; transition: 0.4s; }
-.p-pct { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #fff; font-weight: 600; text-align: right; }
-
-/* Mini Cal Custom Panel */
-.mc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.mc-month { font-size: 12px; font-weight: 700; color: #fff; }
-.mc-nav { display: flex; gap: 4px; }
-.mc-nav button { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-size: 12px;}
-.mc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
-.mc-dow { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); padding-bottom: 2px; }
-.mc-cell { font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 3px 0; border-radius: 4px; }
-.mc-cell.empty { background: transparent; }
-.mc-cell.no-plan { color: rgba(255,255,255,0.15); }
-.mc-cell.future { color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.04); }
-.mc-cell.past { color: #C0DD97; background: rgba(255,255,255,0.1); }
-.mc-cell.today { background: #f97316; color: #fff; font-weight: 700; }
-
-/* Navigation Pills */
-.nav-row {
-  background: #fff; padding: 12px; border: 1px solid #E0E0DA; border-radius: 12px;
-  margin-bottom: 14px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 10;
-}
-.nav-lbl { font-size: 11px; font-weight: 700; color: #9B9B96; text-transform: uppercase; }
-.nav-pills { display: flex; gap: 6px; overflow-x: auto; }
-.nav-pills::-webkit-scrollbar { display: none; }
-.nav-btn {
-  padding: 5px 12px; border-radius: 20px; border: 1px solid #D0D0CA;
-  background: #fff; color: #6B6B66; font-size: 12px; font-weight: 500; cursor: pointer; font-family: 'JetBrains Mono', monospace;
-}
-.nav-btn.active { background: #3B6D11; color: #fff; border-color: #3B6D11; }
-
-/* Week Blocks and Columns */
-.week-section { background: #fff; border: 1px solid #E0E0DA; border-radius: 14px; overflow: hidden; margin-bottom: 16px; }
-.week-header {
-  background: #FAFAF8; border-bottom: 1px solid #F0F0EC; padding: 12px 16px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.wh-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #1A1A18; }
-.wh-title span { color: #3B6D11; font-family: 'JetBrains Mono', monospace; font-size: 14px; margin-left: 4px; }
-.wh-pct { color: #3B6D11; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; }
-
-.cards-container { display: flex; flex-direction: column; }
-.cat-card { padding: 16px; border-bottom: 1px solid #F0F0EC; display: flex; flex-direction: column; }
-.cat-card:last-child { border-bottom: none; }
-
-.cc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.cc-name { font-size: 14px; font-weight: 700; color: #1A1A18; }
-.cc-target { font-size: 12px; color: #6B6B66; margin-top: 1px; }
-.cc-top-right { display: flex; align-items: center; gap: 8px; }
-
-.rem-circle {
-  width: 28px; height: 28px; border-radius: 50%; background: #F4F5F0; color: #6B6B66;
-  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center; border: 1px solid #D0D0CA;
-}
-.pct-chip { padding: 3px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; background: #FFFBEB; color: #78350F; border: 1px solid #FDE68A; }
-.pct-chip.full { background: #F0FDF4; color: #14532D; border-color: #86EFAC; }
-.pct-chip.zero { background: #F4F5F0; color: #9B9B96; border-color: #E0E0DA; }
-
-/* The Orange Box Progress Layout */
-.orange-box {
-  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
-  border: 2px solid #f97316; border-radius: 8px; padding: 4px 6px; margin-bottom: 8px; background: #FFF7ED;
-}
-.ob-day { text-align: center; font-size: 10px; font-weight: 700; color: #C2410C; }
-
-.checks-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-.check-btn-wrap { display: flex; justify-content: center; }
-.check-btn {
-  width: 100%; aspect-ratio: 1; max-width: 40px; border-radius: 8px; border: 1.5px solid #D0D0CA;
-  background: #fff; color: transparent; display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.1s; user-select: none; -webkit-tap-highlight-color: transparent;
-}
-.check-btn.done { background: #E8F5E9; border-color: #A5D6A7; color: #1B5E20; }
-.check-btn.done::after { content: "✓"; }
-.check-btn.blocked { background: #F4F5F0; border-color: #E0E0DA; color: #BDBDBD; cursor: not-allowed; opacity: 0.6; }
-
-@media (max-width: 480px) {
-  .cat-row { grid-template-columns: 1fr; gap: 6px; }
-  .cat-row .cd { margin-bottom: 0; }
-  .cat-row .rm-btn { width: 100%; height: 36px; }
-}
-
-/* TOAST NOTIFICATION */
-#toast {
-  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
-  background: #1A1A18; color: #fff; padding: 10px 18px; border-radius: 20px;
-  font-size: 13px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.15); z-index: 9999; pointer-events: none;
-}
-#toast.show { transform: translateX(-50%) translateY(0); }
+/* FLOATING NAV ACTION BAR */
+.dock-bar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(26,26,24,0.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:4px;display:flex;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,0.15);z-index:999;}
+.dock-item{display:flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:20px;color:#9B9B96;text-decoration:none;font-size:13px;font-weight:600;-webkit-tap-highlight-color:transparent;transition:all .15s;}
+.dock-item.active{background:#fff;color:#1A1A18;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+.dock-icon{font-size:16px;}
 </style>
 </head>
 <body>
 
+<div id="loading">
+  <div class="ld-box">
+    <div class="ld-leaf">🌱</div>
+    <div class="ld-text">Agriculture Portal</div>
+    <div class="ld-sub">Loading department records...</div>
+  </div>
+</div>
+
 <div class="header">
   <div class="header-inner">
-    <div class="header-icon">📅</div>
+    <div class="header-icon">🌾</div>
     <div>
-      <div class="header-title">Personal Study Planner</div>
-      <div class="header-sub">Agriculture Department Portal Tool</div>
+      <div class="header-title" id="lbl-dept">Agriculture Department</div>
+      <div class="header-sub" id="lbl-sem">Ranking Portal</div>
     </div>
-    <a href="index.html" class="back-btn">← Dashboard</a>
   </div>
+</div>
+
+<div class="dock-bar">
+  <a href="#" class="dock-item active" id="dock-home" onclick="switchTab('home', event)">
+    <span class="dock-icon">🏆</span><span>Leaderboard</span>
+  </a>
+  <a href="#" class="dock-item" id="dock-search" onclick="switchTab('search', event)">
+    <span class="dock-icon">🔍</span><span>Search Student</span>
+  </a>
 </div>
 
 <div class="main">
 
-  <div id="setup-screen" class="card">
-    <div class="setup-headline">Build Your Plan</div>
-    <div class="setup-sub">Enter your overall study timeline targets and up to 10 milestone categories.</div>
-
-    <div class="field-group">
-      <label>Start Date</label>
-      <input type="date" id="start-date">
-    </div>
-
-    <div class="field-group">
-      <label>Overall Duration (Days)</label>
-      <div class="preset-btns" id="duration-presets">
-        <button class="preset-btn" data-days="7">7d</button>
-        <button class="preset-btn" data-days="14">14d</button>
-        <button class="preset-btn" data-days="21">21d</button>
-        <button class="preset-btn" data-days="90">90d</button>
-        <button class="preset-btn active" data-days="custom">Custom</button>
+  <div id="sec-home" class="view-sec active">
+    
+    <div class="card matrix-grid">
+      <div class="matrix-box">
+        <div class="matrix-num" id="stat-total">--</div>
+        <div class="matrix-lbl">Enrolled</div>
       </div>
-      <input type="number" id="total-days" min="7" max="365" placeholder="Total overall days...">
-    </div>
-
-    <div class="divider"></div>
-
-    <div>
-      <div class="cat-label-row">
-        <span>Course Categories</span>
-        <span class="cat-count" id="cat-count">0 / 10</span>
+      <div class="matrix-box">
+        <div class="matrix-num" id="stat-avg">--</div>
+        <div class="matrix-lbl">Avg CGPA</div>
       </div>
-      <div id="category-list"></div>
-      <button class="add-cat" id="add-cat-btn" style="width:100%; margin-top:8px;">＋ Add Category Row</button>
     </div>
 
-    <button class="gen-btn" onclick="generateTracker()">Generate Tracker Plan</button>
+    <div class="card" style="padding: 10px 12px 8px;">
+      <span class="sec-lbl" style="margin-bottom:8px;">Filter Batch Cohort</span>
+      <div class="presets" id="batch-presets">
+        <button class="preset-btn active" onclick="filterBatch('ALL', this)">All Batches</button>
+      </div>
+    </div>
+
+    <div class="list-container" id="leaderboard-list"></div>
   </div>
 
-  <div id="tracker-screen">
-    
-    <div class="dashboard-area">
-      <div class="t-header-top">
-        <div class="t-header-left">
-          <div class="t-icon">📊</div>
-          <div>
-            <div class="t-title" id="t-title">Study Routine</div>
-            <div class="t-started" id="t-start-date">--</div>
-          </div>
-        </div>
-        <button class="reset-btn" onclick="resetTracker()">Reset</button>
+  <div id="sec-search" class="view-sec">
+    <div class="card" style="padding-bottom:10px;">
+      <span class="sec-lbl">Student Authentication Search</span>
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="inp-id" class="search-input" placeholder="Enter Student ID (e.g. 02223...)" oninput="handleSearchInput()">
       </div>
-
-      <div class="dash-grid" style="margin-bottom:12px;">
-        <div class="dash-box">
-          <div class="overall-row">
-            <div class="ring-wrap">
-              <svg viewBox="0 0 72 72" class="ring-svg">
-                <circle cx="36" cy="36" r="32" class="ring-bg"/>
-                <circle cx="36" cy="36" r="32" class="ring-fill" id="ring-arc"/>
-              </svg>
-              <span class="ring-lbl" id="d-overall">0%</span>
-            </div>
-            <div class="overall-text"><span class="o-lbl">OVERALL</span></div>
-            <div class="days-stats">
-              <div class="day-stat"><span class="d-num" id="d-passed">0</span><span class="d-text">Days<br>Passed</span></div>
-              <div class="day-stat"><span class="d-num" id="d-left">7</span><span class="d-text">Days<br>Left</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dash-grid">
-        <div class="dash-box">
-          <div class="mc-header">
-            <div class="mc-month" id="mc-month">--</div>
-            <div class="mc-nav">
-              <button id="mc-prev">&#8249;</button>
-              <button id="mc-next">&#8250;</button>
-            </div>
-          </div>
-          <div class="mc-grid" id="mc-grid"></div>
-        </div>
-
-        <div class="dash-box">
-          <div class="prog-title" style="margin-top:0;">Category Targets</div>
-          <div class="prog-list" id="d-cats"></div>
-          
-          <div class="prog-title">Weekly Status</div>
-          <div class="prog-list" id="d-weeks" style="max-height:100px; overflow-y:auto; padding-right:4px;"></div>
-        </div>
+      <div class="search-box" style="margin-bottom:6px;">
+        <span class="search-icon">📧</span>
+        <input type="text" id="inp-email" class="search-input" placeholder="Enter registered Institutional Email..." oninput="handleSearchInput()">
       </div>
     </div>
 
-    <div class="nav-row">
-      <span class="nav-lbl">WEEK:</span>
-      <div class="nav-pills" id="nav-pills"></div>
+    <div class="list-container" id="search-results">
+      <div class="error-state">
+        <div class="error-icon">🕵️‍♂️</div>
+        <div class="error-title">Account Look-up</div>
+        <div class="error-desc">Provide your unique Student ID and your verified institutional email credentials to unlock your rank position profiles.</div>
+      </div>
     </div>
+  </div>
 
-    <div id="tracker-content"></div>
+  <div id="sec-profile" class="view-sec">
+    <div class="card">
+      <div class="prof-header">
+        <div class="prof-avatar" id="p-avatar">A</div>
+        <div class="prof-title-box">
+          <div class="prof-name" id="p-name">--</div>
+          <div class="prof-id" id="p-id">--</div>
+        </div>
+      </div>
+
+      <div class="badge-band">
+        <div class="badge">Batch <strong id="p-batch">--</strong></div>
+        <div class="badge">Rank Position <strong id="p-rank">--</strong></div>
+        <div class="badge">Merit Percentile <strong id="p-pct">--</strong></div>
+      </div>
+
+      <div class="standing-card" id="p-standing-card">
+        <div class="st-icon" id="p-st-icon">🌱</div>
+        <div class="st-text-box">
+          <div class="st-lbl" id="p-st-lbl">Academic Standing</div>
+          <div class="st-desc" id="p-st-desc">--</div>
+        </div>
+      </div>
+
+      <span class="sec-lbl">Semester Grade Record Summary</span>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Course Title</th>
+              <th style="text-align:center;">Cr</th>
+              <th style="text-align:right;">Grade</th>
+            </tr>
+          </thead>
+          <tbody id="transcript-body"></tbody>
+        </table>
+      </div>
+
+      <button class="back-btn" onclick="goBackToSearch()">← Close Record View</button>
+    </div>
   </div>
 
 </div>
 
-<div id="toast"></div>
-
 <script>
-let data = null;
-const maxCats = 10;
-const catList = document.getElementById('category-list');
+// API Configurations fetched from script source code engine deployment
+var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxoZKLYwKNpgX3DsBLWVRrrPDk4BghJ53dcFIo06wdY06C8whH7hSFpO7ppV444RRPD/exec';
 
-const _today = new Date();
-document.getElementById('start-date').value = _today.toISOString().split('T')[0];
+var dataset = [];
+var selectedBatch = 'ALL';
+var activeTab = 'home';
 
-document.querySelectorAll('.preset-btn').forEach(btn => {
-  btn.onclick = (e) => {
-    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    const val = e.target.getAttribute('data-days');
-    const input = document.getElementById('total-days');
-    if (val === 'custom') {
-      input.style.display = 'block';
-      input.focus();
-    } else {
-      input.style.display = 'none';
-      input.value = val;
-    }
-  };
+document.addEventListener('DOMContentLoaded', function() {
+  loadData();
 });
 
-document.getElementById('add-cat-btn').onclick = () => addCat('','','');
-function addCat(name='', target='', days='') {
-  if (catList.children.length >= maxCats) return;
-  const row = document.createElement('div');
-  row.className = 'cat-row';
-  row.innerHTML = `
-    <input type="text" placeholder="Category Name" value="${name}" class="cn">
-    <input type="text" placeholder="Target / Chapter" value="${target}" class="ct">
-    <input type="number" placeholder="Days" value="${days}" class="cd" min="1">
-    <button class="rm-btn">✕</button>
-  `;
-  row.querySelector('.rm-btn').onclick = () => { row.remove(); updateCatCount(); };
-  catList.appendChild(row);
-  updateCatCount();
-}
+function loadData() {
+  fetchJSON(WEB_APP_URL + '?action=getLeaderboard', function(res) {
+    var ld = document.getElementById('loading');
+    if (ld) { ld.classList.add('fade'); setTimeout(function(){ ld.style.display='none'; }, 400); }
 
-function updateCatCount() {
-  const n = catList.children.length;
-  document.getElementById('cat-count').textContent = `${n} / ${maxCats}`;
-  document.getElementById('add-cat-btn').style.display = n >= maxCats ? 'none' : 'block';
-}
+    if (!res || !res.success || !res.data) {
+      showGlobalError();
+      return;
+    }
 
-// Default initial rows
-addCat('Botany','Chapter 1', 7);
-addCat('Agronomy','Chapter 2', 14);
-addCat('Soil Science','Chapter 3', 7);
-
-function generateTracker() {
-  const startVal = document.getElementById('start-date').value;
-  const totalDays = parseInt(document.getElementById('total-days').value);
-  if (!startVal) return toast('Pick a valid start date');
-  if (!totalDays || totalDays < 7) return toast('Minimum plan window is 7 days');
-
-  const cats = [];
-  let exceedError = false;
-
-  document.querySelectorAll('.cat-row').forEach(r => {
-    const n = r.querySelector('.cn').value.trim();
-    const t = r.querySelector('.ct').value.trim();
-    const d = parseInt(r.querySelector('.cd').value);
+    dataset = res.data;
     
-    if (n && !isNaN(d) && d > totalDays) { exceedError = true; }
-    if (n) cats.push({ name: n, target: t || '—', targetDays: isNaN(d) || d < 1 ? totalDays : d });
-  });
+    if(res.department) document.getElementById('lbl-dept').textContent = res.department;
+    if(res.semester) document.getElementById('lbl-sem').textContent = res.semester;
 
-  if (exceedError) return toast('Category specific days cannot exceed total timeframe');
-  if (!cats.length) return toast('Provide at least one study metric');
+    // Build metric summaries
+    document.getElementById('stat-total').textContent = dataset.length;
+    var totalCgpa = 0;
+    dataset.forEach(function(s){ totalCgpa += parseFloat(s.cgpa || 0); });
+    document.getElementById('stat-avg').textContent = dataset.length ? (totalCgpa / dataset.length).toFixed(2) : '0.00';
 
-  const numWeeks = Math.ceil(totalDays / 7);
-  const weeks = Array.from({ length: numWeeks }, (_, i) => ({
-    wk: i + 1,
-    rows: cats.map((c, catIdx) => ({ section: c.name, target: c.target, catIdx: catIdx, days: Array(7).fill(false) }))
-  }));
+    // Extract unique batches dynamically sorted
+    var batches = {};
+    dataset.forEach(function(s) { if(s.batch) batches[s.batch] = true; });
+    var sortedBatches = Object.keys(batches).sort(function(a,b){ return b-a; });
 
-  data = { startDate: startVal, totalDays, categories: cats, weeks };
-  save(); render();
-}
-
-let calViewDate = null;
-const colors = ['#C0DD97', '#97C459', '#3B6D11', '#EAF3DE', '#f97316', '#2dd4bf'];
-
-function getCatProgress(catIdx) {
-  if (!data) return { checked: 0, target: 1, pct: 0 };
-  const target = data.categories[catIdx].targetDays;
-  const checked = data.weeks.flatMap(w => w.rows.find(r => r.catIdx === catIdx).days).filter(Boolean).length;
-  const pct = Math.min(100, Math.round((checked / target) * 100));
-  return { checked, target, pct };
-}
-
-function render() {
-  document.getElementById('setup-screen').style.display = 'none';
-  document.getElementById('tracker-screen').style.display = 'flex';
-
-  document.getElementById('t-title').textContent = `${data.totalDays}-Day Study Plan`;
-  document.getElementById('t-start-date').textContent = `Started ${new Date(data.startDate).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'})}`;
-
-  calViewDate = null;
-  buildNav();
-  buildCards();
-  updateDash();
-}
-
-function buildNav() {
-  const nav = document.getElementById('nav-pills'); nav.innerHTML = '';
-  data.weeks.forEach((w, i) => {
-    const b = document.createElement('button');
-    b.className = 'nav-btn' + (i === 0 ? ' active' : '');
-    b.textContent = `W${w.wk}`;
-    b.onclick = () => {
-      document.querySelectorAll('.nav-btn').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-      document.getElementById(`w-sec-${w.wk}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-    nav.appendChild(b);
-  });
-}
-
-function buildCards() {
-  const container = document.getElementById('tracker-content'); container.innerHTML = '';
-
-  data.weeks.forEach(w => {
-    const sec = document.createElement('div');
-    sec.className = 'week-section';
-    sec.id = `w-sec-${w.wk}`;
-
-    const wPct = calcPct(w.rows.flatMap(r => r.days));
-    const hdr = document.createElement('div');
-    hdr.className = 'week-header';
-    hdr.innerHTML = `<div class="wh-title">WEEK <span>${w.wk}</span></div><div class="wh-pct" id="wh-pct-${w.wk}">${wPct}%</div>`;
-    sec.appendChild(hdr);
-
-    const cardsWrap = document.createElement('div');
-    cardsWrap.className = 'cards-container';
-
-    w.rows.forEach((row, ri) => {
-      const card = document.createElement('div');
-      card.className = 'cat-card';
-      
-      const prog = getCatProgress(row.catIdx);
-      const chipClass = prog.pct >= 100 ? 'full' : prog.pct > 0 ? '' : 'zero';
-      
-      card.innerHTML = `
-        <div class="cc-top">
-          <div>
-            <div class="cc-name">${esc(row.section)}</div>
-            <div class="cc-target">${esc(row.target)}</div>
-          </div>
-          <div class="cc-top-right">
-            <div class="rem-circle rem-circle-cat-${row.catIdx}">0</div>
-            <div class="pct-chip ${chipClass}" id="chip-w${w.wk}-cat${row.catIdx}">${prog.pct}%</div>
-          </div>
-        </div>
-        <div class="orange-box">
-          <div class="ob-day">D1</div><div class="ob-day">D2</div><div class="ob-day">D3</div>
-          <div class="ob-day">D4</div><div class="ob-day">D5</div><div class="ob-day">D6</div><div class="ob-day">D7</div>
-        </div>
-        <div class="checks-row"></div>
-      `;
-      
-      const checksRow = card.querySelector('.checks-row');
-      row.days.forEach((done, di) => {
-        const wrap = document.createElement('div'); wrap.className = 'check-btn-wrap';
-        const btn = document.createElement('div');
-        
-        let btnClass = 'check-btn';
-        if (done) btnClass += ' done';
-        else if (prog.checked >= prog.target) btnClass += ' blocked';
-
-        btn.className = btnClass;
-        btn.id = `btn-w${w.wk}-cat${row.catIdx}-d${di}`;
-        btn.onclick = () => toggle(w.wk, ri, di, row.catIdx);
-        wrap.appendChild(btn);
-        checksRow.appendChild(wrap);
-      });
-
-      cardsWrap.appendChild(card);
+    var presetWrap = document.getElementById('batch-presets');
+    sortedBatches.forEach(function(b) {
+      var btn = document.createElement('button');
+      btn.className = 'preset-btn';
+      btn.textContent = 'Batch ' + b;
+      btn.onclick = function() { filterBatch(b, btn); };
+      presetWrap.appendChild(btn);
     });
 
-    sec.appendChild(cardsWrap);
-    container.appendChild(sec);
+    renderLeaderboard();
   });
 }
 
-function updateCategoryUI(catIdx) {
-  const prog = getCatProgress(catIdx);
-  const chipClass = prog.pct >= 100 ? 'full' : prog.pct > 0 ? '' : 'zero';
+function showGlobalError() {
+  var wrapper = document.getElementById('leaderboard-list');
+  wrapper.innerHTML = `
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <div class="error-title">Connection Failed</div>
+      <div class="error-desc">Unable to retrieve grading ledger files from data warehouse sheets pipeline hub.</div>
+      <a href="javascript:location.reload()" class="error-link">Retry Connection</a>
+    </div>`;
+}
 
-  data.weeks.forEach(w => {
-    const chip = document.getElementById(`chip-w${w.wk}-cat${catIdx}`);
-    if (chip) {
-      chip.textContent = `${prog.pct}%`;
-      chip.className = 'pct-chip ' + chipClass;
-    }
-    
-    const row = w.rows.find(r => r.catIdx === catIdx);
-    if (row) {
-      row.days.forEach((done, di) => {
-        const btn = document.getElementById(`btn-w${w.wk}-cat${catIdx}-d${di}`);
-        if (btn) {
-          let btnClass = 'check-btn';
-          if (done) btnClass += ' done';
-          else if (prog.checked >= prog.target) btnClass += ' blocked';
-          btn.className = btnClass;
-        }
-      });
-    }
+function renderLeaderboard() {
+  var list = document.getElementById('leaderboard-list');
+  list.innerHTML = '';
+
+  // Filter list data
+  var filtered = dataset.filter(function(s) {
+    return selectedBatch === 'ALL' || String(s.batch) === String(selectedBatch);
+  });
+
+  // Re-rank items specifically within filtered batch views context
+  filtered.forEach(function(item, index) {
+    var rankNum = index + 1;
+    var pct = dataset.length > 1 ? (((dataset.length - item.rank) / (dataset.length - 1)) * 100).toFixed(0) : '100';
+
+    var el = document.createElement('div');
+    el.className = 'row-item';
+    el.onclick = function() { requestProfileAccess(item.id); };
+
+    el.innerHTML = `
+      ${medal(rankNum)}
+      <div class="row-info">
+        <div class="row-meta">
+          <span class="row-name">${esc(item.name)}</span>
+        </div>
+        <div class="row-sub">ID: ${esc(item.id)} <span class="dot">•</span> Batch ${esc(item.batch)}</div>
+      </div>
+      <div class="row-right">
+        <div class="row-cgpa">${parseFloat(item.cgpa).toFixed(2)}</div>
+        <div class="row-pct">${pct}%tile</div>
+      </div>
+    `;
+    list.appendChild(el);
   });
 }
 
-function toggle(wk, ri, di, catIdx) {
-  const w = data.weeks.find(x => x.wk === wk);
-  const isDone = w.rows[ri].days[di];
-  const progBefore = getCatProgress(catIdx);
+function filterBatch(batch, btn) {
+  selectedBatch = batch;
+  var p = btn.parentElement;
+  p.querySelectorAll('.preset-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderLeaderboard();
+}
+
+function switchTab(tab, e) {
+  if(e) e.preventDefault();
+  activeTab = tab;
   
-  if (!isDone && progBefore.checked >= progBefore.target) {
-    return toast(`Target limit of ${progBefore.target} days reached!`);
-  }
+  document.querySelectorAll('.dock-item').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.view-sec').forEach(function(el){ el.classList.remove('active'); });
 
-  w.rows[ri].days[di] = !isDone;
-  updateCategoryUI(catIdx);
-
-  const wPct = calcPct(w.rows.flatMap(r => r.days));
-  document.getElementById(`wh-pct-${wk}`).textContent = `${wPct}%`;
-
-  save();
-  updateDash();
-}
-
-function updateDash() {
-  const sd = new Date(data.startDate); sd.setHours(0,0,0,0);
-  const today = new Date(); today.setHours(0,0,0,0);
-  const elapsed = Math.max(0, Math.min(data.totalDays, Math.floor((today - sd) / 86400000)));
-  
-  document.getElementById('d-passed').textContent = elapsed;
-  document.getElementById('d-left').textContent = Math.max(0, data.totalDays - elapsed);
-
-  let totalTargets = 0, allCompleted = 0;
-  const catDiv = document.getElementById('d-cats'); catDiv.innerHTML = '';
-
-  data.categories.forEach((cat, idx) => {
-    const completedDaysForCat = data.weeks.flatMap(w => w.rows.filter(r => r.catIdx === idx).flatMap(r => r.days)).filter(Boolean).length;
-    totalTargets += cat.targetDays;
-    allCompleted += completedDaysForCat;
-
-    const remainingCatDays = Math.max(0, cat.targetDays - completedDaysForCat);
-    document.querySelectorAll(`.rem-circle-cat-${idx}`).forEach(el => { el.textContent = remainingCatDays; });
-
-    const p = Math.min(100, Math.round((completedDaysForCat / cat.targetDays) * 100)) || 0; 
-    const col = colors[idx % colors.length];
-    
-    catDiv.innerHTML += `
-      <div class="prog-item">
-        <span class="p-name">${esc(cat.name)}</span>
-        <div class="p-bar-wrap"><div class="p-bar" style="width:${p}%; background:${col}"></div></div>
-        <span class="p-pct" style="color:#fff">${p}%</span>
-      </div>`;
-  });
-
-  const globalPct = Math.min(100, Math.round((allCompleted / totalTargets) * 100)) || 0;
-  document.getElementById('d-overall').textContent = globalPct + '%';
-  document.getElementById('ring-arc').style.strokeDashoffset = 201 - (globalPct / 100) * 201;
-
-  const wDiv = document.getElementById('d-weeks'); wDiv.innerHTML = '';
-  data.weeks.forEach((w) => {
-    const p = calcPct(w.rows.flatMap(r => r.days));
-    wDiv.innerHTML += `
-      <div class="prog-item">
-        <span class="p-name" style="font-family:'JetBrains Mono',monospace">W${w.wk}</span>
-        <div class="p-bar-wrap"><div class="p-bar" style="width:${p}%; background:#FAFAF8"></div></div>
-        <span class="p-pct">${p}%</span>
-      </div>`;
-  });
-
-  buildMiniCal();
-}
-
-document.getElementById('mc-prev').onclick = () => { calViewDate.setMonth(calViewDate.getMonth() - 1); buildMiniCal(); };
-document.getElementById('mc-next').onclick = () => { calViewDate.setMonth(calViewDate.getMonth() + 1); buildMiniCal(); };
-
-function buildMiniCal() {
-  if(!data) return;
-  const grid = document.getElementById('mc-grid');
-  const sd = new Date(data.startDate); sd.setHours(0,0,0,0);
-  const ed = new Date(sd); ed.setDate(ed.getDate() + data.totalDays - 1);
-  const today = new Date(); today.setHours(0,0,0,0);
-
-  if (!calViewDate) calViewDate = new Date(today.getFullYear(), today.getMonth(), 1);
-
-  const y = calViewDate.getFullYear(), m = calViewDate.getMonth();
-  document.getElementById('mc-month').textContent = calViewDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-
-  grid.innerHTML = '';
-  ['S','M','T','W','T','F','S'].forEach(d => { grid.innerHTML += `<div class="mc-dow">${d}</div>`; });
-
-  const firstDay = new Date(y, m, 1).getDay();
-  for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="mc-cell empty"></div>`;
-
-  const daysInMonth = new Date(y, m + 1, 0).getDate();
-  for (let d = 1; d <= daysInMonth; d++) {
-    const cDate = new Date(y, m, d); cDate.setHours(0,0,0,0);
-    let cls = 'mc-cell';
-    if (cDate < sd || cDate > ed) cls += ' no-plan';
-    else if (cDate.getTime() === today.getTime()) cls += ' today';
-    else if (cDate < today) cls += ' past';
-    else cls += ' future';
-    
-    grid.innerHTML += `<div class="${cls}">${d}</div>`;
+  if (tab === 'home') {
+    document.getElementById('dock-home').classList.add('active');
+    document.getElementById('sec-home').classList.add('active');
+  } else if (tab === 'search') {
+    document.getElementById('dock-search').classList.add('active');
+    document.getElementById('sec-search').classList.add('active');
   }
 }
 
-function calcPct(arr) { return arr.length ? Math.round(arr.filter(Boolean).length / arr.length * 100) : 0; }
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-function save() { localStorage.setItem('strack4', JSON.stringify(data)); } 
-function resetTracker() {
-  if (!confirm('Clear all progress data timelines?')) return;
-  localStorage.removeItem('strack4'); data = null;
-  document.getElementById('tracker-screen').style.display = 'none';
-  document.getElementById('setup-screen').style.display = 'block';
+function handleSearchInput() {
+  var idVal = document.getElementById('inp-id').value.trim();
+  var emailVal = document.getElementById('inp-email').value.trim().toLowerCase();
+  var wrap = document.getElementById('search-results');
+
+  if(!idVal || !emailVal) {
+    wrap.innerHTML = `
+      <div class="error-state">
+        <div class="error-icon">🕵️‍♂️</div>
+        <div class="error-title">Verification Look-up</div>
+        <div class="error-desc">Provide both unique Student ID and your verified institutional email matching registry records.</div>
+      </div>`;
+    return;
+  }
+
+  // Find inside database dataset array local ledger match
+  var match = dataset.find(function(s) {
+    return String(s.id).trim() === idVal && String(s.email).trim().toLowerCase() === emailVal;
+  });
+
+  if (!match) {
+    wrap.innerHTML = `
+      <div class="error-state">
+        <div class="error-icon">❌</div>
+        <div class="error-title">No Records Match</div>
+        <div class="error-desc">The credentials entered do not match any verified registration row in the department index directory.</div>
+        <div style="font-size:12px; margin-top:4px; color:#888;">Not registered? <a href="register.html" style="color:#3B6D11; font-weight:600;">Register Here &rarr;</a></div>
+      </div>`;
+    return;
+  }
+
+  wrap.innerHTML = '';
+  var pct = dataset.length > 1 ? (((dataset.length - match.rank) / (dataset.length - 1)) * 100).toFixed(0) : '100';
+
+  var div = document.createElement('div');
+  div.className = 'row-item';
+  div.style.borderColor = '#3B6D11';
+  div.style.background = '#ECFDF5';
+  div.onclick = function() { renderFullProfile(match); };
+  div.innerHTML = `
+    ${medal(match.rank)}
+    <div class="row-info">
+      <div class="row-meta"><span class="row-name" style="color:#047857">${esc(match.name)}</span></div>
+      <div class="row-sub">Verified Profile Access Granted <span class="dot">•</span> Click to view</div>
+    </div>
+    <div class="row-right">
+      <div class="row-cgpa" style="color:#047857">${parseFloat(match.cgpa).toFixed(2)}</div>
+      <div class="row-pct">${pct}%tile</div>
+    </div>
+  `;
+  wrap.appendChild(div);
 }
 
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function requestProfileAccess(studentId) {
+  // Enforce credentials search to view detailed profiles securely
+  switchTab('search');
+  document.getElementById('inp-id').value = studentId;
+  document.getElementById('inp-email').value = '';
+  document.getElementById('inp-id').focus();
+  handleSearchInput();
+}
 
-try {
-  const raw = localStorage.getItem('strack4'); 
-  if (raw) { data = JSON.parse(raw); render(); }
-} catch {}
+function renderFullProfile(studentObj) {
+  document.querySelectorAll('.view-sec').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById('sec-profile').classList.add('active');
+
+  document.getElementById('p-avatar').textContent = studentObj.name ? studentObj.name.charAt(0).toUpperCase() : 'S';
+  document.getElementById('p-name').textContent = studentObj.name;
+  document.getElementById('p-id').textContent = 'Student ID: ' + studentObj.id;
+  document.getElementById('p-batch').textContent = studentObj.batch;
+  document.getElementById('p-rank').textContent = '#' + studentObj.rank;
+  
+  var pct = dataset.length > 1 ? (((dataset.length - studentObj.rank) / (dataset.length - 1)) * 100).toFixed(0) : '100';
+  document.getElementById('p-pct').textContent = pct + 'th Percentile';
+
+  // Standings block assignment calculation
+  var insight = standingInsight(parseFloat(studentObj.cgpa), studentObj.rank);
+  var scard = document.getElementById('p-standing-card');
+  scard.className = 'standing-card ' + insight.cls;
+  document.getElementById('p-st-icon').innerHTML = insight.icon;
+  document.getElementById('p-st-lbl').textContent = insight.label + ' Status Band';
+  document.getElementById('p-st-desc').textContent = insight.comment;
+
+  // Retrieve course items breakdown matrix
+  var tbody = document.getElementById('transcript-body');
+  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#888;padding:20px;">Fetching course items breakdown transcript...</td></tr>';
+
+  fetchJSON(WEB_APP_URL + '?action=getTranscript&id=' + encodeURIComponent(studentObj.id) + '&email=' + encodeURIComponent(studentObj.email), function(res) {
+    if(!res || !res.success || !res.courses || !res.courses.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#c62828;padding:20px;font-weight:500;">Failed to pull semester items spreadsheet rows.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = '';
+    res.courses.forEach(function(c) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="td-code">${esc(c.code)}</td>
+        <td class="td-title">${esc(c.title)}</td>
+        <td class="td-cr">${esc(c.credits)}</td>
+        <td class="td-gp">${parseFloat(c.gp).toFixed(2)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  });
+}
+
+function goBackToSearch() {
+  document.getElementById('sec-profile').classList.remove('active');
+  document.getElementById('sec-search').classList.add('active');
+}
+
+function standingInsight(cgpa, rank) {
+  if (rank===1 || cgpa>=3.90) return {cls:'Outstanding',   icon:'&#127775;', label:'Outstanding',      comment:'Exceptional achievement! You are at the pinnacle of academic excellence.'};
+  if (cgpa>=3.71) return {cls:'Excellent', icon:'&#127885;', label:'Excellent',    comment:'Brilliant performance! You are among the top performers of the department.'};
+  if (cgpa>=3.50) return {cls:'Very Good', icon:'&#128079;', label:'Very Good',    comment:'Great effort! A little more push will take you to the distinction level.'};
+  return                 {cls:'Keep Improving',     icon:'&#128170;', label:'Keep Improving', comment:'Keep working hard! Every effort brings you closer to your goal.'};
+}
+
+function medal(r) {
+  if (r===1) return '<div class=\"rk rk1\">&#129351;</div>';
+  if (r===2) return '<div class=\"rk rk2\">&#129352;</div>';
+  if (r===3) return '<div class=\"rk rk3\">&#129353;</div>';
+  return '<div class=\"rk rkn\">'+r+'</div>';
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fetchJSON(url, cb) {
+  var name = 'cb_' + Date.now() + Math.floor(Math.random()*1000);
+  var script = document.createElement('script');
+  window[name] = function(data) {
+    delete window[name];
+    try { document.body.removeChild(script); } catch(e){}
+    cb(data);
+  };
+  script.onerror = function() {
+    delete window[name];
+    try { document.body.removeChild(script); } catch(e){}
+    fetch(url).then(function(r){ return r.json(); }).then(cb).catch(function(){ cb(null); });
+  };
+  script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + name;
+  document.body.appendChild(script);
+}
 </script>
 </body>
 </html>
