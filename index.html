@@ -16,498 +16,316 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 #loading.fade{opacity:0;pointer-events:none;}
 .ld-box{text-align:center;padding:2rem;}
 .ld-leaf{font-size:52px;margin-bottom:12px;animation:pulse 1.6s infinite;}
-@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
-.ld-text{font-size:20px;font-weight:800;color:#fff;letter-spacing:0.5px;margin-bottom:4px;}
-.ld-sub{font-size:13px;color:#97C459;font-weight:500;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+.ld-title{font-size:20px;font-weight:700;color:#EAF3DE;margin-bottom:4px;}
+.ld-sub{font-size:13px;color:#97C459;margin-bottom:20px;}
+.ld-bar-wrap{width:220px;height:4px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;margin:0 auto 12px;}
+.ld-bar{height:100%;background:#C0DD97;border-radius:4px;width:0;transition:width .5s ease;}
+.ld-msg{font-size:12px;color:#97C459;}
 
-/* HEADER */
-.header{background:linear-gradient(135deg,#1E3D08,#3B6D11);padding:1.5rem 1rem 1.25rem;}
-.header-inner{max-width:520px;margin:0 auto;display:flex;align-items:center;gap:14px;}
-.header-icon{font-size:36px;line-height:1;}
-.header-title{font-size:20px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:2px;}
-.header-sub{font-size:12px;color:#97C459;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+/* REG BAR */
+.reg-bar{background:#2E5E0E;color:#EAF3DE;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;}
+.reg-bar a{background:#76B82A;color:#fff;padding:6px 14px;border-radius:20px;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;}
 
-/* MAIN WRAPPER */
-.main{max-width:520px;margin:0 auto;padding:1rem .875rem 3rem;}
+/* HERO */
+.hero{background:linear-gradient(135deg,#1E3D08 0%,#3B6D11 60%,#639922 100%);padding:1.75rem 1rem 1.5rem;}
+.hero-inner{max-width:700px;margin:0 auto;}
+.hero-eye{font-size:10px;letter-spacing:2px;color:#97C459;font-weight:500;text-transform:uppercase;margin-bottom:6px;}
+.hero-h1{font-size:22px;font-weight:700;color:#EAF3DE;line-height:1.25;margin-bottom:4px;}
+.hero-sub{font-size:14px;color:#C0DD97;margin-bottom:12px;}
+.hero-badge{display:inline-block;background:rgba(0,0,0,.2);border:1px solid rgba(192,221,151,.3);border-radius:20px;padding:4px 12px;font-size:11px;color:#C0DD97;}
 
-/* SECTIONS / VISIBILITY */
-.view-sec{display:none;}
-.view-sec.active{display:block;}
+/* NAV */
+.tab-nav{background:#fff;border-bottom:1px solid #E0E0DA;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:13px 15px;font-size:13px;font-weight:500;border:none;background:transparent;color:#6B6B66;border-bottom:2.5px solid transparent;cursor:pointer;white-space:nowrap;font-family:inherit;flex-shrink:0;-webkit-tap-highlight-color:transparent;transition:color .2s;}
+.tab-btn.active{color:#3B6D11;border-bottom-color:#3B6D11;}
+.tab-btn.locked{color:#BCBCB8;cursor:pointer;}
 
-/* CARDS */
-.card{background:#fff;border:1px solid #E0E0DA;border-radius:14px;padding:1.25rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(26,26,24,0.02);}
-.sec-lbl{font-size:11px;font-weight:700;color:#9B9B96;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:block;}
+/* PREMIUM PLANNER STYLING CONTROLS */
+.planner-wrapper-premium {width:100%;height:calc(100vh - 200px);min-height:580px;border-radius:14px;overflow:hidden;background:#ffffff;border:1px solid #E0E0DA;box-shadow:0 4px 12px rgba(0,0,0,0.03);}
+.planner-iframe-premium {width:100%;height:100%;border:none;display:block;}
 
-/* SEARCH PRESETS */
-.search-box{position:relative;margin-bottom:12px;}
-.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:#9B9B96;pointer-events:none;}
-.search-input{width:100%;height:46px;background:#FAFAF8;border:1.5px solid #D0D0CA;border-radius:10px;padding:0 14px 0 38px;font-size:15px;color:#1A1A18;outline:none;transition:all .2s;-webkit-appearance:none;appearance:none;}
-.search-input:focus{background:#fff;border-color:#3B6D11;box-shadow:0 0 0 3px rgba(59,109,17,0.12);}
+/* MAIN */
+.main{max-width:700px;margin:0 auto;padding:1.25rem .875rem 3rem;}
+.tab-view{display:none;}
+.tab-view.active{display:block;}
+.sec-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9B9B96;font-weight:500;margin-bottom:10px;}
 
-.presets{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:4px;margin-left:-2px;margin-right:-2px;scrollbar-width:none;}
-.presets::-webkit-scrollbar{display:none;}
-.preset-btn{background:#fff;border:1.5px solid #D0D0CA;border-radius:20px;padding:5px 13px;font-size:12px;font-weight:600;color:#6B6B66;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;}
-.preset-btn:active{transform:scale(0.96);}
-.preset-btn.active{background:#3B6D11;border-color:#3B6D11;color:#fff;}
+/* CARD */
+.card{background:#fff;border:1px solid #E0E0DA;border-radius:14px;overflow:hidden;margin-bottom:1rem;}
 
-/* STATS MATRIX GRID */
-.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.matrix-box{background:#FAFAF8;border:1px solid #E0E0DA;border-radius:10px;padding:12px 14px;}
-.matrix-num{font-size:22px;font-weight:800;color:#1A1A18;font-family:-apple-system,BlinkMacSystemFont,monospace;line-height:1.2;margin-bottom:2px;}
-.matrix-lbl{font-size:11px;font-weight:600;color:#6B6B66;text-transform:uppercase;letter-spacing:0.3px;}
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:1rem;}
+@media(min-width:480px){.stat-grid{grid-template-columns:repeat(4,1fr);}}
+.s-card{background:#fff;border:1px solid #E0E0DA;border-radius:12px;padding:12px 14px;}
+.s-lbl{font-size:11px;color:#6B6B66;margin-bottom:4px;}
+.s-val{font-size:20px;font-weight:700;}
+.s-val.g{color:#3B6D11;}.s-val.a{color:#92540A;}.s-val.b{color:#1557B0;}.s-val.sm{font-size:14px;padding-top:3px;}
 
-/* LEADERBOARD LIST */
-.list-container{display:flex;flex-direction:column;gap:8px;}
-.row-item{background:#fff;border:1px solid #E0E0DA;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .15s;}
-.row-item:active{background-color:#FAFAF8;}
+/* DIST */
+.dist-row{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid #F0F0EC;}
+.dist-row:last-child{border-bottom:none;}
+.d-lbl{width:95px;font-size:11px;color:#6B6B66;text-align:right;flex-shrink:0;}
+.d-wrap{flex:1;height:18px;background:#F4F5F0;border-radius:4px;overflow:hidden;}
+.d-bar{height:100%;border-radius:4px;transition:width .8s ease;}
+.d-cnt{width:30px;font-size:12px;font-weight:600;text-align:right;}
 
-/* RANKS */
-.rk{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;font-family:-apple-system,BlinkMacSystemFont,monospace;}
-.rk1{background:#FEF3C7;color:#92400E;font-size:18px;}
-.rk2{background:#F1F5F9;color:#475569;font-size:18px;}
-.rk3{background:#FFEDD5;color:#9A3412;font-size:18px;}
-.rkn{background:#F4F5F0;color:#6B6B66;}
+/* LOCK WALL */
+.lock-wall{background:#fff;border:2px dashed #D0D0CA;border-radius:16px;padding:30px 20px;text-align:center;margin-top:16px;}
+.lock-wall-icon{font-size:44px;margin-bottom:10px;line-height:1;}
+.lock-wall-title{font-size:17px;font-weight:700;color:#1A1A18;margin-bottom:6px;}
+.lock-wall-sub{font-size:13px;color:#6B6B66;line-height:1.6;margin-bottom:22px;max-width:320px;margin-left:auto;margin-right:auto;}
+.verify-form{display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto;}
+.v-input{width:100%;padding:12px 14px;font-size:15px;border:1.5px solid #D0D0CA;border-radius:10px;background:#FAFAF8;color:#1A1A18;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;}
+.v-input:focus{border-color:#3B6D11;background:#fff;}
+.v-btn{width:100%;padding:13px;background:#3B6D11;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;}
+.v-btn:active{background:#2E5E0E;}
+.v-btn:disabled{background:#9B9B96;cursor:not-allowed;}
+.v-msg-wrap{margin-top:6px;}
+.vmsg-err{color:#991B1B;background:#FEE2E2;padding:9px 13px;border-radius:9px;border:1px solid #FECACA;font-size:13px;}
+.vmsg-pend{color:#78350F;background:#FFFBEB;padding:9px 13px;border-radius:9px;border:1px solid #FDE68A;font-size:13px;}
+.v-register-hint{font-size:12px;color:#9B9B96;margin-top:14px;}
+.v-register-hint a{color:#3B6D11;font-weight:600;text-decoration:none;}
 
-.row-info{flex:1;min-width:0;}
-.row-meta{display:flex;align-items:center;gap:6px;margin-bottom:2px;}
-.row-name{font-size:15px;font-weight:700;color:#1A1A18;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.row-sub{font-size:12px;color:#6B6B66;font-weight:500;}
-.dot{color:#D0D0CA;font-size:10px;}
+/* VERIFIED BANNER */
+.verified-banner{background:#F0FDF4;border:1.5px solid #86EFAC;border-radius:12px;padding:12px 16px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.vb-left{font-size:13px;color:#14532D;font-weight:500;}
+.vb-left strong{font-weight:700;}
+.vb-lock-btn{background:transparent;border:1.5px solid #86EFAC;color:#3B6D11;padding:5px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;}
 
-.row-right{text-align:right;}
-.row-cgpa{font-size:16px;font-weight:800;color:#1E3D08;font-family:-apple-system,BlinkMacSystemFont,monospace;line-height:1.2;}
-.row-pct{font-size:11px;color:#6B6B66;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,monospace;}
+/* LEADERBOARD */
+.lb-head{padding:12px 16px;border-bottom:1px solid #F0F0EC;display:flex;align-items:center;gap:10px;}
+.lb-ico{width:32px;height:32px;background:#EAF3DE;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.lb-ttl{font-size:14px;font-weight:600;}
+.lb-stl{font-size:11px;color:#9B9B96;}
+.lb-row{display:grid;grid-template-columns:42px 1fr 56px 58px;align-items:center;padding:10px 16px;border-bottom:1px solid #F0F0EC;font-size:13px;}
+.lb-row:last-child{border-bottom:none;}
+.rk{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.rk1{background:#FEF3C7;color:#92400E;border:1.5px solid #F5C11A;}
+.rk2{background:#F3F3F3;color:#374151;border:1.5px solid #B0B0B0;}
+.rk3{background:#FEF0E6;color:#7C3D12;border:1.5px solid #CD7B3C;}
+.rkn{background:#F4F5F0;color:#6B6B66;font-size:11px;}
+.bp{font-size:10px;background:#EAF3DE;color:#3B6D11;border-radius:10px;padding:2px 7px;font-weight:600;}
+.lb-cg{font-weight:700;text-align:right;}
+.lb-c{text-align:center;}
 
-/* INDIVIDUAL PROFILE VIEW */
-.prof-header{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;}
-.prof-avatar{width:54px;height:54px;border-radius:50%;background:#EAF3DE;color:#3B6D11;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;}
-.prof-title-box{flex:1;min-width:0;}
-.prof-name{font-size:19px;font-weight:800;color:#1A1A18;line-height:1.25;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.prof-id{font-size:13px;color:#6B6B66;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,monospace;}
+/* SEARCH */
+.s-card-wrap{padding:18px;}
+.s-intro{font-size:13px;color:#6B6B66;margin-bottom:14px;line-height:1.5;}
+.f-lbl{display:block;font-size:11px;font-weight:600;color:#6B6B66;margin-bottom:5px;}
+input[type=text],input[type=email]{width:100%;padding:11px 13px;font-size:15px;border:1.5px solid #D0D0CA;border-radius:9px;background:#FAFAF8;color:#1A1A18;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none;margin-bottom:12px;display:block;}
+input:focus{border-color:#3B6D11;background:#fff;}
+.s-btn{width:100%;padding:13px;background:#3B6D11;color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;margin-top:4px;}
+.s-btn:active{background:#2E5E0E;}
+.s-btn:disabled{background:#9B9B96;}
+#s-msg{margin-top:12px;font-size:13px;}
+.msg-e{background:#FEE2E2;color:#7F1D1D;padding:10px 13px;border-radius:9px;border:1px solid #FECACA;}
+.msg-p{background:#FFFBEB;color:#78350F;padding:10px 13px;border-radius:9px;border:1px solid #FDE68A;}
 
-.badge-band{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem;}
-.badge{background:#FAFAF8;border:1px solid #E0E0DA;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;color:#1A1A18;}
-.badge strong{font-weight:700;color:#3B6D11;}
+/* RESULT */
+#result-card{margin-top:14px;}
+.r-wrap{background:#fff;border:1px solid #E0E0DA;border-radius:14px;overflow:hidden;}
+.r-head{background:linear-gradient(135deg,#2E5E0E,#3B6D11);padding:16px 18px;}
+.r-name{font-size:20px;font-weight:700;color:#EAF3DE;}
+.r-meta{font-size:12px;color:#97C459;margin-top:3px;}
+.r-body{padding:18px;}
+.cgpa-blk{text-align:center;padding:6px 0 12px;}
+.cgpa-n{font-size:52px;font-weight:800;color:#3B6D11;line-height:1;}
+.cgpa-l{font-size:12px;color:#9B9B96;margin-top:4px;}
+.perf{border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px;}
+.perf.exemplary{background:#FFFBEB;border:1px solid #FDE68A;}
+.perf.distinction{background:#F0FDF4;border:1px solid #86EFAC;}
+.perf.commendable{background:#EFF6FF;border:1px solid #93C5FD;}
+.perf.improve{background:#FFF1F2;border:1px solid #FECDD3;}
+.perf-ico{font-size:22px;flex-shrink:0;}
+.perf-lbl{font-size:14px;font-weight:700;margin-bottom:2px;}
+.perf-cmt{font-size:12px;color:#6B6B66;line-height:1.4;}
+.r-strip{background:#EAF3DE;border-radius:9px;padding:11px 13px;margin-bottom:8px;display:flex;align-items:center;gap:9px;}
+.r-strip-ico{font-size:18px;flex-shrink:0;}
+.r-strip-txt{font-size:13px;color:#1E3D08;font-weight:500;line-height:1.4;}
+.pct-row{display:flex;gap:8px;margin-top:4px;}
+.pct-box{flex:1;background:#F4F5F0;border-radius:9px;padding:11px 10px;text-align:center;}
+.pct-n{font-size:17px;font-weight:700;color:#3B6D11;}
+.pct-l{font-size:10px;color:#9B9B96;margin-top:2px;}
+.same-note{margin-top:10px;background:#F0FDF4;border:1px solid #86EFAC;border-radius:9px;padding:10px 13px;font-size:13px;color:#14532D;}
+.same-note.u{background:#F4F5F0;border-color:#D0D0CA;color:#6B6B66;}
+.i-tbl{width:100%;margin-top:14px;border-top:1px solid #F0F0EC;}
+.i-tbl td{padding:9px 0;border-bottom:1px solid #F0F0EC;font-size:13px;}
+.i-tbl tr:last-child td{border-bottom:none;}
+.i-tbl .l{color:#6B6B66;}
+.i-tbl .v{text-align:right;font-weight:600;}
 
-/* STANDING INSIGHT BANNER */
-.standing-card{border-radius:12px;padding:12px 14px;margin-bottom:1.25rem;display:flex;gap:12px;align-items:flex-start;}
-.standing-card.Outstanding{background:#FEF3C7;border:1px solid #FCD34D;}
-.standing-card.Excellent{background:#E0F2FE;border:1px solid #7DD3FC;}
-.standing-card.Very{background:#ECFDF5;border:1px solid #6EE7B7;}
-.standing-card.Keep{background:#F4F5F0;border:1px solid #E0E0DA;}
+/* BATCH TABS */
+.b-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.b-tab{padding:7px 15px;font-size:12px;border:1px solid #D0D0CA;border-radius:20px;cursor:pointer;background:#fff;color:#6B6B66;font-family:inherit;font-weight:500;-webkit-tap-highlight-color:transparent;}
+.b-tab.active{background:#3B6D11;color:#fff;border-color:#3B6D11;}
+.b-panel{display:none;}
+.b-panel.active{display:block;}
+.bt-row{display:grid;grid-template-columns:42px 1fr 80px 58px;align-items:center;padding:9px 14px;border-bottom:1px solid #F0F0EC;font-size:13px;}
+.bt-row:last-child{border-bottom:none;}
+.same-bdg{font-size:10px;background:#E8F5E9;color:#2E7D32;border-radius:8px;padding:2px 6px;white-space:nowrap;}
 
-.st-icon{font-size:26px;line-height:1;margin-top:2px;}
-.st-text-box{flex:1;}
-.st-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:1px;}
-.Outstanding .st-lbl{color:#92400E;}
-.Excellent .st-lbl{color:#0369A1;}
-.Very .st-lbl{color:#047857;}
-.Keep .st-lbl{color:#6B6B66;}
-.st-desc{font-size:13px;font-weight:500;line-height:1.4;color:#1A1A18;}
+/* FOOTER */
+.footer{text-align:center;padding:1.5rem 1rem;font-size:12px;color:#9B9B96;border-top:1px solid #E0E0DA;background:#fff;margin-top:2rem;}
+.footer a{color:#3B6D11;text-decoration:none;}
 
-/* TRANSCRIPT SHEET TABLE */
-.table-wrap{border:1px solid #E0E0DA;border-radius:10px;overflow:hidden;margin-bottom:1.25rem;}
-table{width:100%;border-collapse:collapse;text-align:left;font-size:13.5px;}
-th{background:#FAFAF8;border-bottom:1px solid #E0E0DA;color:#6B6B66;font-weight:600;padding:8px 12px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
-td{padding:10px 12px;border-bottom:1px solid #F0F0EC;color:#1A1A18;}
-tr:last-child td{border-bottom:none;}
-.td-code{font-family:-apple-system,BlinkMacSystemFont,monospace;color:#6B6B66;font-weight:500;}
-.td-title{font-weight:600;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.td-cr{text-align:center;font-family:-apple-system,BlinkMacSystemFont,monospace;}
-.td-gp{text-align:right;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,monospace;}
-
-.back-btn{display:block;width:100%;text-align:center;background:#1A1A18;color:#fff;border:none;border-radius:10px;height:44px;font-size:14px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .15s;}
-.back-btn:active{background:#333;}
-
-/* EMPTY / ERROR STATES */
-.error-state{text-align:center;padding:2.5rem 1rem;color:#6B6B66;}
-.error-icon{font-size:40px;margin-bottom:8px;}
-.error-title{font-size:16px;font-weight:700;color:#1A1A18;margin-bottom:4px;}
-.error-desc{font-size:13px;line-height:1.5;max-width:280px;margin:0 auto 12px;}
-.error-link{display:inline-block;background:#3B6D11;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;-webkit-tap-highlight-color:transparent;}
-.error-link:active{background:#2E5E0E;}
-
-/* FLOATING NAV ACTION BAR */
-.dock-bar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(26,26,24,0.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:4px;display:flex;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,0.15);z-index:999;}
-.dock-item{display:flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:20px;color:#9B9B96;text-decoration:none;font-size:13px;font-weight:600;-webkit-tap-highlight-color:transparent;transition:all .15s;}
-.dock-item.active{background:#fff;color:#1A1A18;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-.dock-icon{font-size:16px;}
+/* SHAKE */
+@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+.shake{animation:shake .4s ease;}
 </style>
 </head>
 <body>
 
 <div id="loading">
   <div class="ld-box">
-    <div class="ld-leaf">🌱</div>
-    <div class="ld-text">Agriculture Portal</div>
-    <div class="ld-sub">Loading department records...</div>
+    <div class="ld-leaf">&#127806;</div>
+    <div class="ld-title">Agriculture Department</div>
+    <div class="ld-sub">Result Ranking Portal</div>
+    <div class="ld-bar-wrap"><div class="ld-bar" id="lbar"></div></div>
+    <div class="ld-msg" id="lmsg">Loading...</div>
   </div>
 </div>
 
-<div class="header">
-  <div class="header-inner">
-    <div class="header-icon">🌾</div>
-    <div>
-      <div class="header-title" id="lbl-dept">Agriculture Department</div>
-      <div class="header-sub" id="lbl-sem">Ranking Portal</div>
-    </div>
-  </div>
-</div>
+<div id="app" style="display:none">
 
-<div class="dock-bar">
-  <a href="#" class="dock-item active" id="dock-home" onclick="switchTab('home', event)">
-    <span class="dock-icon">🏆</span><span>Leaderboard</span>
-  </a>
-  <a href="#" class="dock-item" id="dock-search" onclick="switchTab('search', event)">
-    <span class="dock-icon">🔍</span><span>Search Student</span>
-  </a>
-</div>
-
-<div class="main">
-
-  <div id="sec-home" class="view-sec active">
-    
-    <div class="card matrix-grid">
-      <div class="matrix-box">
-        <div class="matrix-num" id="stat-total">--</div>
-        <div class="matrix-lbl">Enrolled</div>
-      </div>
-      <div class="matrix-box">
-        <div class="matrix-num" id="stat-avg">--</div>
-        <div class="matrix-lbl">Avg CGPA</div>
-      </div>
-    </div>
-
-    <div class="card" style="padding: 10px 12px 8px;">
-      <span class="sec-lbl" style="margin-bottom:8px;">Filter Batch Cohort</span>
-      <div class="presets" id="batch-presets">
-        <button class="preset-btn active" onclick="filterBatch('ALL', this)">All Batches</button>
-      </div>
-    </div>
-
-    <div class="list-container" id="leaderboard-list"></div>
+  <div class="reg-bar">
+    <span>&#128203; New student? Register your result for ranking</span>
+    <a href="register.html">Register Now &#8594;</a>
   </div>
 
-  <div id="sec-search" class="view-sec">
-    <div class="card" style="padding-bottom:10px;">
-      <span class="sec-lbl">Student Authentication Search</span>
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="inp-id" class="search-input" placeholder="Enter Student ID (e.g. 02223...)" oninput="handleSearchInput()">
-      </div>
-      <div class="search-box" style="margin-bottom:6px;">
-        <span class="search-icon">📧</span>
-        <input type="text" id="inp-email" class="search-input" placeholder="Enter registered Institutional Email..." oninput="handleSearchInput()">
-      </div>
-    </div>
-
-    <div class="list-container" id="search-results">
-      <div class="error-state">
-        <div class="error-icon">🕵️‍♂️</div>
-        <div class="error-title">Account Look-up</div>
-        <div class="error-desc">Provide your unique Student ID and your verified institutional email credentials to unlock your rank position profiles.</div>
-      </div>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eye" id="h-sem"></div>
+      <h1 class="hero-h1" id="h-dept"></h1>
+      <p class="hero-sub">Result Ranking Portal</p>
+      <div class="hero-badge">&#10003; Only verified results are listed</div>
     </div>
   </div>
 
-  <div id="sec-profile" class="view-sec">
-    <div class="card">
-      <div class="prof-header">
-        <div class="prof-avatar" id="p-avatar">A</div>
-        <div class="prof-title-box">
-          <div class="prof-name" id="p-name">--</div>
-          <div class="prof-id" id="p-id">--</div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" id="nav-dashboard" onclick="showTab(this,'dashboard')">Dashboard</button>
+    <button class="tab-btn"        id="nav-planner"   onclick="showTab(this,'planner')">&#128197; Study Planner</button>
+    <button class="tab-btn locked" id="nav-top20"     onclick="tryLockedTab(this,'top20')">&#128274; Top 20</button>
+    <button class="tab-btn locked" id="nav-search"    onclick="tryLockedTab(this,'search')">&#128274; Check Your Position</button>
+    <button class="tab-btn locked" id="nav-batches"   onclick="tryLockedTab(this,'batches')">&#128274; Top 10 in Each Batch</button>
+  </nav>
+
+  <main class="main">
+
+    <div id="tab-dashboard" class="tab-view active">
+      <p class="sec-lbl">Department Overview</p>
+      <div class="stat-grid" id="stat-grid"></div>
+      <p class="sec-lbl">CGPA Distribution</p>
+      <div class="card" id="dist-chart"></div>
+
+      <div id="verify-box" class="lock-wall">
+        <div class="lock-wall-icon">&#128274;</div>
+        <div class="lock-wall-title">Unlock Full Rankings</div>
+        <div class="lock-wall-sub">Enter your registered Student ID and email to unlock Top 20, your position, and batch rankings.</div>
+        <div class="verify-form">
+          <input class="v-input" type="text"  id="v-id"     placeholder="Student ID" autocomplete="off">
+          <input class="v-input" type="email" id="v-email" placeholder="Registered email" autocomplete="off">
+          <button class="v-btn" id="v-btn" onclick="doVerify()">Verify &amp; Unlock</button>
+          <div id="v-msg" class="v-msg-wrap"></div>
+        </div>
+        <div class="v-register-hint">Not registered yet? <a href="register.html">Register here</a></div>
+      </div>
+
+      <div id="verified-banner" class="verified-banner" style="display:none">
+        <div class="vb-left">&#9989; Verified: <strong id="vb-name"></strong> &mdash; All tabs unlocked</div>
+        <button class="vb-lock-btn" onclick="lockAll()">&#128274; Lock</button>
+      </div>
+    </div>
+
+    <div id="tab-planner" class="tab-view">
+      <p class="sec-lbl">Personal Study Tracker &amp; Schedule</p>
+      <div class="planner-wrapper-premium">
+        <iframe id="planner-iframe-core" src="" class="planner-iframe-premium"></iframe>
+      </div>
+    </div>
+
+    <div id="tab-top20" class="tab-view">
+      <p class="sec-lbl">Top 20 Students &#8212; All Batches</p>
+      <div class="card" id="lb-top20"></div>
+    </div>
+
+    <div id="tab-search" class="tab-view">
+      <p class="sec-lbl">Check Your Position</p>
+      <div class="card">
+        <div class="s-card-wrap">
+          <p class="s-intro">Enter your Student ID and the email you used during registration.</p>
+          <label class="f-lbl">Student ID</label>
+          <input type="text"  id="inp-id"     placeholder="e.g. 24209150" autocomplete="off">
+          <label class="f-lbl">Email Address</label>
+          <input type="email" id="inp-email" placeholder="your.email@example.com" autocomplete="off">
+          <button class="s-btn" id="s-btn" onclick="doSearch()">Search Result</button>
+          <div id="s-msg"></div>
         </div>
       </div>
-
-      <div class="badge-band">
-        <div class="badge">Batch <strong id="p-batch">--</strong></div>
-        <div class="badge">Rank Position <strong id="p-rank">--</strong></div>
-        <div class="badge">Merit Percentile <strong id="p-pct">--</strong></div>
-      </div>
-
-      <div class="standing-card" id="p-standing-card">
-        <div class="st-icon" id="p-st-icon">🌱</div>
-        <div class="st-text-box">
-          <div class="st-lbl" id="p-st-lbl">Academic Standing</div>
-          <div class="st-desc" id="p-st-desc">--</div>
-        </div>
-      </div>
-
-      <span class="sec-lbl">Semester Grade Record Summary</span>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Course Title</th>
-              <th style="text-align:center;">Cr</th>
-              <th style="text-align:right;">Grade</th>
-            </tr>
-          </thead>
-          <tbody id="transcript-body"></tbody>
-        </table>
-      </div>
-
-      <button class="back-btn" onclick="goBackToSearch()">← Close Record View</button>
+      <div id="result-card"></div>
     </div>
-  </div>
 
+    <div id="tab-batches" class="tab-view">
+      <p class="sec-lbl">Top 10 in Each Batch</p>
+      <div class="b-tabs" id="b-tabs"></div>
+      <div id="b-panels"></div>
+    </div>
+
+  </main>
+
+  <div class="footer">
+    &copy; <a href="tel:+8801753486065">Mizan &middot; 01753-486065</a>
+    &nbsp;&middot;&nbsp; Rankings update after each verification.
+  </div>
 </div>
 
 <script>
-// API Configurations fetched from script source code engine deployment
-var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxoZKLYwKNpgX3DsBLWVRrrPDk4BghJ53dcFIo06wdY06C8whH7hSFpO7ppV444RRPD/exec';
+var API = 'https://script.google.com/macros/s/AKfycbxoZKLYwKNpgX3DsBLWVRrrPDk4BghJ53dcFIo06wdY06C8whH7hSFpO7ppV444RRPD/exec';
 
-var dataset = [];
-var selectedBatch = 'ALL';
-var activeTab = 'home';
+var DATA       = null;
+var isVerified = false;
 
-document.addEventListener('DOMContentLoaded', function() {
-  loadData();
+var LOCKED_TABS = ['top20','search','batches'];
+var LOCKED_LABELS = {
+  top20:   '&#128274; Top 20',
+  search:  '&#128274; Check Your Position',
+  batches: '&#128274; Top 10 in Each Batch'
+};
+var UNLOCKED_LABELS = {
+  top20:   '&#127942; Top 20',
+  search:  '&#128269; Check Your Position',
+  batches: '&#128218; Top 10 in Each Batch'
+};
+
+// BOOT
+window.addEventListener('DOMContentLoaded', function() {
+  setBar(30, 'Connecting to database...');
+  fetchJSON(API + '?action=getData', function(data) {
+    if (!data || !data.ok) { setMsg('Failed to load. Please refresh.'); return; }
+    DATA = data;
+    setBar(100, 'Done!');
+    setTimeout(function() {
+      var ls = document.getElementById('loading');
+      ls.classList.add('fade');
+      setTimeout(function() {
+        ls.style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        renderAll();
+      }, 400);
+    }, 200);
+  });
 });
 
-function loadData() {
-  fetchJSON(WEB_APP_URL + '?action=getLeaderboard', function(res) {
-    var ld = document.getElementById('loading');
-    if (ld) { ld.classList.add('fade'); setTimeout(function(){ ld.style.display='none'; }, 400); }
-
-    if (!res || !res.success || !res.data) {
-      showGlobalError();
-      return;
-    }
-
-    dataset = res.data;
-    
-    if(res.department) document.getElementById('lbl-dept').textContent = res.department;
-    if(res.semester) document.getElementById('lbl-sem').textContent = res.semester;
-
-    // Build metric summaries
-    document.getElementById('stat-total').textContent = dataset.length;
-    var totalCgpa = 0;
-    dataset.forEach(function(s){ totalCgpa += parseFloat(s.cgpa || 0); });
-    document.getElementById('stat-avg').textContent = dataset.length ? (totalCgpa / dataset.length).toFixed(2) : '0.00';
-
-    // Extract unique batches dynamically sorted
-    var batches = {};
-    dataset.forEach(function(s) { if(s.batch) batches[s.batch] = true; });
-    var sortedBatches = Object.keys(batches).sort(function(a,b){ return b-a; });
-
-    var presetWrap = document.getElementById('batch-presets');
-    sortedBatches.forEach(function(b) {
-      var btn = document.createElement('button');
-      btn.className = 'preset-btn';
-      btn.textContent = 'Batch ' + b;
-      btn.onclick = function() { filterBatch(b, btn); };
-      presetWrap.appendChild(btn);
-    });
-
-    renderLeaderboard();
-  });
+function setBar(pct, msg) {
+  document.getElementById('lbar').style.width = pct + '%';
+  document.getElementById('lmsg').textContent = msg;
 }
+function setMsg(m) { document.getElementById('lmsg').textContent = m; }
 
-function showGlobalError() {
-  var wrapper = document.getElementById('leaderboard-list');
-  wrapper.innerHTML = `
-    <div class="error-state">
-      <div class="error-icon">⚠️</div>
-      <div class="error-title">Connection Failed</div>
-      <div class="error-desc">Unable to retrieve grading ledger files from data warehouse sheets pipeline hub.</div>
-      <a href="javascript:location.reload()" class="error-link">Retry Connection</a>
-    </div>`;
-}
-
-function renderLeaderboard() {
-  var list = document.getElementById('leaderboard-list');
-  list.innerHTML = '';
-
-  // Filter list data
-  var filtered = dataset.filter(function(s) {
-    return selectedBatch === 'ALL' || String(s.batch) === String(selectedBatch);
-  });
-
-  // Re-rank items specifically within filtered batch views context
-  filtered.forEach(function(item, index) {
-    var rankNum = index + 1;
-    var pct = dataset.length > 1 ? (((dataset.length - item.rank) / (dataset.length - 1)) * 100).toFixed(0) : '100';
-
-    var el = document.createElement('div');
-    el.className = 'row-item';
-    el.onclick = function() { requestProfileAccess(item.id); };
-
-    el.innerHTML = `
-      ${medal(rankNum)}
-      <div class="row-info">
-        <div class="row-meta">
-          <span class="row-name">${esc(item.name)}</span>
-        </div>
-        <div class="row-sub">ID: ${esc(item.id)} <span class="dot">•</span> Batch ${esc(item.batch)}</div>
-      </div>
-      <div class="row-right">
-        <div class="row-cgpa">${parseFloat(item.cgpa).toFixed(2)}</div>
-        <div class="row-pct">${pct}%tile</div>
-      </div>
-    `;
-    list.appendChild(el);
-  });
-}
-
-function filterBatch(batch, btn) {
-  selectedBatch = batch;
-  var p = btn.parentElement;
-  p.querySelectorAll('.preset-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  renderLeaderboard();
-}
-
-function switchTab(tab, e) {
-  if(e) e.preventDefault();
-  activeTab = tab;
-  
-  document.querySelectorAll('.dock-item').forEach(function(el){ el.classList.remove('active'); });
-  document.querySelectorAll('.view-sec').forEach(function(el){ el.classList.remove('active'); });
-
-  if (tab === 'home') {
-    document.getElementById('dock-home').classList.add('active');
-    document.getElementById('sec-home').classList.add('active');
-  } else if (tab === 'search') {
-    document.getElementById('dock-search').classList.add('active');
-    document.getElementById('sec-search').classList.add('active');
-  }
-}
-
-function handleSearchInput() {
-  var idVal = document.getElementById('inp-id').value.trim();
-  var emailVal = document.getElementById('inp-email').value.trim().toLowerCase();
-  var wrap = document.getElementById('search-results');
-
-  if(!idVal || !emailVal) {
-    wrap.innerHTML = `
-      <div class="error-state">
-        <div class="error-icon">🕵️‍♂️</div>
-        <div class="error-title">Verification Look-up</div>
-        <div class="error-desc">Provide both unique Student ID and your verified institutional email matching registry records.</div>
-      </div>`;
-    return;
-  }
-
-  // Find inside database dataset array local ledger match
-  var match = dataset.find(function(s) {
-    return String(s.id).trim() === idVal && String(s.email).trim().toLowerCase() === emailVal;
-  });
-
-  if (!match) {
-    wrap.innerHTML = `
-      <div class="error-state">
-        <div class="error-icon">❌</div>
-        <div class="error-title">No Records Match</div>
-        <div class="error-desc">The credentials entered do not match any verified registration row in the department index directory.</div>
-        <div style="font-size:12px; margin-top:4px; color:#888;">Not registered? <a href="register.html" style="color:#3B6D11; font-weight:600;">Register Here &rarr;</a></div>
-      </div>`;
-    return;
-  }
-
-  wrap.innerHTML = '';
-  var pct = dataset.length > 1 ? (((dataset.length - match.rank) / (dataset.length - 1)) * 100).toFixed(0) : '100';
-
-  var div = document.createElement('div');
-  div.className = 'row-item';
-  div.style.borderColor = '#3B6D11';
-  div.style.background = '#ECFDF5';
-  div.onclick = function() { renderFullProfile(match); };
-  div.innerHTML = `
-    ${medal(match.rank)}
-    <div class="row-info">
-      <div class="row-meta"><span class="row-name" style="color:#047857">${esc(match.name)}</span></div>
-      <div class="row-sub">Verified Profile Access Granted <span class="dot">•</span> Click to view</div>
-    </div>
-    <div class="row-right">
-      <div class="row-cgpa" style="color:#047857">${parseFloat(match.cgpa).toFixed(2)}</div>
-      <div class="row-pct">${pct}%tile</div>
-    </div>
-  `;
-  wrap.appendChild(div);
-}
-
-function requestProfileAccess(studentId) {
-  // Enforce credentials search to view detailed profiles securely
-  switchTab('search');
-  document.getElementById('inp-id').value = studentId;
-  document.getElementById('inp-email').value = '';
-  document.getElementById('inp-id').focus();
-  handleSearchInput();
-}
-
-function renderFullProfile(studentObj) {
-  document.querySelectorAll('.view-sec').forEach(function(el){ el.classList.remove('active'); });
-  document.getElementById('sec-profile').classList.add('active');
-
-  document.getElementById('p-avatar').textContent = studentObj.name ? studentObj.name.charAt(0).toUpperCase() : 'S';
-  document.getElementById('p-name').textContent = studentObj.name;
-  document.getElementById('p-id').textContent = 'Student ID: ' + studentObj.id;
-  document.getElementById('p-batch').textContent = studentObj.batch;
-  document.getElementById('p-rank').textContent = '#' + studentObj.rank;
-  
-  var pct = dataset.length > 1 ? (((dataset.length - studentObj.rank) / (dataset.length - 1)) * 100).toFixed(0) : '100';
-  document.getElementById('p-pct').textContent = pct + 'th Percentile';
-
-  // Standings block assignment calculation
-  var insight = standingInsight(parseFloat(studentObj.cgpa), studentObj.rank);
-  var scard = document.getElementById('p-standing-card');
-  scard.className = 'standing-card ' + insight.cls;
-  document.getElementById('p-st-icon').innerHTML = insight.icon;
-  document.getElementById('p-st-lbl').textContent = insight.label + ' Status Band';
-  document.getElementById('p-st-desc').textContent = insight.comment;
-
-  // Retrieve course items breakdown matrix
-  var tbody = document.getElementById('transcript-body');
-  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#888;padding:20px;">Fetching course items breakdown transcript...</td></tr>';
-
-  fetchJSON(WEB_APP_URL + '?action=getTranscript&id=' + encodeURIComponent(studentObj.id) + '&email=' + encodeURIComponent(studentObj.email), function(res) {
-    if(!res || !res.success || !res.courses || !res.courses.length) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#c62828;padding:20px;font-weight:500;">Failed to pull semester items spreadsheet rows.</td></tr>';
-      return;
-    }
-
-    tbody.innerHTML = '';
-    res.courses.forEach(function(c) {
-      var tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td class="td-code">${esc(c.code)}</td>
-        <td class="td-title">${esc(c.title)}</td>
-        <td class="td-cr">${esc(c.credits)}</td>
-        <td class="td-gp">${parseFloat(c.gp).toFixed(2)}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  });
-}
-
-function goBackToSearch() {
-  document.getElementById('sec-profile').classList.remove('active');
-  document.getElementById('sec-search').classList.add('active');
-}
-
-function standingInsight(cgpa, rank) {
-  if (rank===1 || cgpa>=3.90) return {cls:'Outstanding',   icon:'&#127775;', label:'Outstanding',      comment:'Exceptional achievement! You are at the pinnacle of academic excellence.'};
-  if (cgpa>=3.71) return {cls:'Excellent', icon:'&#127885;', label:'Excellent',    comment:'Brilliant performance! You are among the top performers of the department.'};
-  if (cgpa>=3.50) return {cls:'Very Good', icon:'&#128079;', label:'Very Good',    comment:'Great effort! A little more push will take you to the distinction level.'};
-  return                 {cls:'Keep Improving',     icon:'&#128170;', label:'Keep Improving', comment:'Keep working hard! Every effort brings you closer to your goal.'};
-}
-
-function medal(r) {
-  if (r===1) return '<div class=\"rk rk1\">&#129351;</div>';
-  if (r===2) return '<div class=\"rk rk2\">&#129352;</div>';
-  if (r===3) return '<div class=\"rk rk3\">&#129353;</div>';
-  return '<div class=\"rk rkn\">'+r+'</div>';
-}
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
+// JSONP FETCH (cross-origin, works on mobile Chrome)
 function fetchJSON(url, cb) {
-  var name = 'cb_' + Date.now() + Math.floor(Math.random()*1000);
+  var name = 'cb_' + Date.now();
   var script = document.createElement('script');
   window[name] = function(data) {
     delete window[name];
@@ -517,11 +335,310 @@ function fetchJSON(url, cb) {
   script.onerror = function() {
     delete window[name];
     try { document.body.removeChild(script); } catch(e){}
-    fetch(url).then(function(r){ return r.json(); }).then(cb).catch(function(){ cb(null); });
+    fetch(url)
+      .then(function(r){ return r.json(); })
+      .then(cb)
+      .catch(function(){ setMsg('Network error. Check connection.'); });
   };
   script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + name;
   document.body.appendChild(script);
 }
+
+// TAB SYSTEM
+function showTab(btn, id) {
+  var btns  = document.querySelectorAll('.tab-btn');
+  var views = document.querySelectorAll('.tab-view');
+  for (var i = 0; i < btns.length; i++)  btns[i].classList.remove('active');
+  for (var i = 0; i < views.length; i++) views[i].classList.remove('active');
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+
+  // Lazy load implementation for the Study Planner iframe
+  if (id === 'planner') {
+    var coreFrame = document.getElementById('planner-iframe-core');
+    if (!coreFrame.src || coreFrame.src === "" || coreFrame.src === window.location.href) {
+      coreFrame.src = './planner.html';
+    }
+  }
+}
+
+function tryLockedTab(btn, id) {
+  if (isVerified) { showTab(btn, id); return; }
+  // Bounce to dashboard, shake the verify box
+  showTab(document.getElementById('nav-dashboard'), 'dashboard');
+  var box = document.getElementById('verify-box');
+  box.classList.remove('shake');
+  void box.offsetWidth;
+  box.classList.add('shake');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(function(){ box.classList.remove('shake'); }, 450);
+}
+
+// VERIFY & UNLOCK
+function doVerify() {
+  var id    = document.getElementById('v-id').value.trim();
+  var email = document.getElementById('v-email').value.trim();
+  var msg   = document.getElementById('v-msg');
+  var btn   = document.getElementById('v-btn');
+
+  if (!id || !email) {
+    msg.innerHTML = '<div class="vmsg-err">Please enter both Student ID and email.</div>';
+    return;
+  }
+  msg.innerHTML = '<div style="color:#6B6B66;font-size:13px;margin-top:4px">Verifying...</div>';
+  btn.disabled = true;
+
+  fetchJSON(API + '?action=search&id=' + encodeURIComponent(id) + '&email=' + encodeURIComponent(email), function(r) {
+    btn.disabled = false;
+    if (!r) { msg.innerHTML = '<div class="vmsg-err">Connection error. Please try again.</div>'; return; }
+
+    if (r.success) {
+      isVerified = true;
+
+      // Unlock nav tabs
+      LOCKED_TABS.forEach(function(t) {
+        var b = document.getElementById('nav-' + t);
+        b.classList.remove('locked');
+        b.innerHTML = UNLOCKED_LABELS[t];
+        b.onclick = (function(navBtn, tabId){ return function(){ showTab(navBtn, tabId); }; })(b, t);
+      });
+
+      // Hide lock wall, show verified banner
+      document.getElementById('verify-box').style.display = 'none';
+      document.getElementById('verified-banner').style.display = 'flex';
+      document.getElementById('vb-name').textContent = r.name || id;
+
+      // Pre-fill search tab with verified credentials
+      document.getElementById('inp-id').value    = id;
+      document.getElementById('inp-email').value = email;
+
+      // Auto-load their result in the search tab
+      renderResult(r);
+
+      msg.innerHTML = '';
+    } else {
+      var errMsgs = {
+        not_found:   'Student ID not found. Check your ID or register first.',
+        wrong_email: 'Email does not match your registered email.',
+        pending:     'Your result is under review. Please wait for admin verification.',
+        rejected:    'Your submission was rejected. Please re-register with a valid screenshot.',
+      };
+      var cls = (r.reason === 'pending') ? 'vmsg-pend' : 'vmsg-err';
+      msg.innerHTML = '<div class="' + cls + '">' + (errMsgs[r.reason] || 'Verification failed. Please try again.') + '</div>';
+    }
+  });
+}
+
+// LOCK ALL
+function lockAll() {
+  isVerified = false;
+  LOCKED_TABS.forEach(function(t) {
+    var b = document.getElementById('nav-' + t);
+    b.classList.add('locked');
+    b.innerHTML = LOCKED_LABELS[t];
+    b.onclick = (function(navBtn, tabId){ return function(){ tryLockedTab(navBtn, tabId); }; })(b, t);
+  });
+  document.getElementById('verify-box').style.display = 'block';
+  document.getElementById('verified-banner').style.display = 'none';
+  document.getElementById('v-id').value    = '';
+  document.getElementById('v-email').value = '';
+  document.getElementById('v-msg').innerHTML = '';
+  document.getElementById('result-card').innerHTML = '';
+  document.getElementById('s-msg').innerHTML = '';
+  showTab(document.getElementById('nav-dashboard'), 'dashboard');
+}
+
+// RENDER ALL
+function renderAll() {
+  document.getElementById('h-sem').textContent  = DATA.semester.toUpperCase();
+  document.getElementById('h-dept').textContent = DATA.deptName;
+  renderStats(DATA.stats);
+  renderDist(DATA.dist);
+  renderTop20(DATA.top20, DATA.stats.approved);
+  renderBatches(DATA.batchTops);
+}
+
+// STATS
+function renderStats(s) {
+  var items = [
+    {l:'Total Registered',     v:s.registered,        c:''},
+    {l:'Approved Students',    v:s.approved,          c:'g'},
+    {l:'CGPA to Enter Top 20', v:s.cgpaToTop20,       c:'a'},
+    {l:'Active Batches',       v:s.batches,           c:'b'},
+    {l:'Highest CGPA',         v:s.highCGPA,          c:'g'},
+    {l:'Dept. Average CGPA',   v:s.avgCGPA,           c:''},
+    {l:'Top Ranked Batch',     v:'Batch '+s.topBatch, c:'g sm'},
+    {l:'Last Updated',         v:s.lastUpdated,       c:'sm'},
+  ];
+  var h = '';
+  for (var i = 0; i < items.length; i++) {
+    h += '<div class="s-card"><div class="s-lbl">'+items[i].l+'</div><div class="s-val '+items[i].c+'">'+esc(String(items[i].v))+'</div></div>';
+  }
+  document.getElementById('stat-grid').innerHTML = h;
+}
+
+// DISTRIBUTION
+function renderDist(dist) {
+  var counts = dist.map(function(d){ return d.count; });
+  var mx = Math.max.apply(null, counts.concat([1]));
+  var colors = ['#639922','#3B6D11','#97C459','#C0DD97','#D3D1C7'];
+  var h = '';
+  for (var i = 0; i < dist.length; i++) {
+    var w = Math.round(dist[i].count / mx * 100);
+    h += '<div class="dist-row"><div class="d-lbl">'+esc(dist[i].label)+'</div>'+
+         '<div class="d-wrap"><div class="d-bar" style="width:'+w+'%;background:'+colors[i]+'"></div></div>'+
+         '<div class="d-cnt">'+dist[i].count+'</div></div>';
+  }
+  document.getElementById('dist-chart').innerHTML = h;
+}
+
+// TOP 20
+function renderTop20(top20, total) {
+  var h = '<div class="lb-head"><div class="lb-ico">&#127942;</div>'+
+    '<div><div class="lb-ttl">Top 20 &#8212; All Batches</div><div class="lb-stl">'+total+' approved students ranked</div></div></div>';
+  for (var i = 0; i < top20.length; i++) {
+    var s = top20[i];
+    h += '<div class="lb-row">'+medal(s.rank)+
+      '<div>'+esc(s.name)+'</div>'+
+      '<div class="lb-c"><span class="bp">'+esc(s.batch)+'</span></div>'+
+      '<div class="lb-cg">'+esc(s.cgpa)+'</div></div>';
+  }
+  document.getElementById('lb-top20').innerHTML = h;
+}
+
+// BATCH RANKINGS
+function renderBatches(batchTops) {
+  var batches   = Object.keys(batchTops).sort();
+  var tabsEl    = document.getElementById('b-tabs');
+  var panelsEl = document.getElementById('b-panels');
+  tabsEl.innerHTML = ''; panelsEl.innerHTML = '';
+  for (var bi = 0; bi < batches.length; bi++) {
+    (function(b, idx) {
+      var btn = document.createElement('button');
+      btn.className   = 'b-tab' + (idx === 0 ? ' active' : '');
+      btn.textContent = 'Batch ' + b;
+      btn.onclick = function() {
+        var ts = document.querySelectorAll('.b-tab');
+        var ps = document.querySelectorAll('.b-panel');
+        for (var j = 0; j < ts.length; j++) ts[j].classList.remove('active');
+        for (var j = 0; j < ps.length; j++) ps[j].classList.remove('active');
+        btn.classList.add('active');
+        document.getElementById('bp-' + b).classList.add('active');
+      };
+      tabsEl.appendChild(btn);
+      var students = batchTops[b];
+      var h = '<div class="card"><div class="lb-head"><div class="lb-ico">&#128101;</div>'+
+        '<div><div class="lb-ttl">Batch '+b+' &#8212; Top 10</div></div></div>';
+      for (var si = 0; si < students.length; si++) {
+        var s = students[si];
+        var same = s.sameCgpa > 0 ? '<span class="same-bdg">+'+s.sameCgpa+' same</span>' : '';
+        h += '<div class="bt-row">'+medal(s.pos)+
+          '<div>'+esc(s.name)+'</div>'+
+          '<div style="text-align:center">'+same+'</div>'+
+          '<div class="lb-cg">'+esc(s.cgpa)+'</div></div>';
+      }
+      h += '</div>';
+      var panel = document.createElement('div');
+      panel.className = 'b-panel' + (idx === 0 ? ' active' : '');
+      panel.id = 'bp-' + b;
+      panel.innerHTML = h;
+      panelsEl.appendChild(panel);
+    })(batches[bi], bi);
+  }
+}
+
+// SEARCH
+function doSearch() {
+  var sid   = document.getElementById('inp-id').value.trim();
+  var email = document.getElementById('inp-email').value.trim();
+  var msg   = document.getElementById('s-msg');
+  var btn   = document.getElementById('s-btn');
+  var rc    = document.getElementById('result-card');
+  msg.innerHTML = ''; rc.innerHTML = '';
+  if (!sid || !email) { msg.innerHTML = '<div class="msg-e">Please enter both Student ID and email.</div>'; return; }
+  btn.disabled = true; btn.textContent = 'Searching...';
+  fetchJSON(API + '?action=search&id=' + encodeURIComponent(sid) + '&email=' + encodeURIComponent(email), function(r) {
+    btn.disabled = false; btn.textContent = 'Search Result';
+    if (!r) { msg.innerHTML = '<div class="msg-e">Connection error. Please try again.</div>'; return; }
+    if (!r.success) {
+      var msgs = {
+        not_found:   'Student ID not found. Please check your ID.',
+        wrong_email: 'Email does not match. Use the email you registered with.',
+        pending:     'Your result is still under review. Please wait for admin verification.',
+        rejected:    'Your submission was rejected. Please re-register with a valid result screenshot.',
+      };
+      var cls = (r.reason === 'pending') ? 'msg-p' : 'msg-e';
+      msg.innerHTML = '<div class="'+cls+'">'+(msgs[r.reason] || 'An error occurred.')+'</div>';
+      return;
+    }
+    renderResult(r);
+  });
+}
+
+function renderResult(r) {
+  var cgpa = parseFloat(r.cgpa);
+  var perf = perfLabel(cgpa);
+  var dpct = r.totalDept  > 0 ? (r.deptRank  / r.totalDept  * 100).toFixed(1) : '--';
+  var bpct = r.totalBatch > 0 ? (r.batchRank / r.totalBatch * 100).toFixed(1) : '--';
+  var sameHtml = r.sameCgpaCount > 0
+    ? '<div class="same-note">&#128101; '+r.sameCgpaCount+' other student'+(r.sameCgpaCount>1?'s':'')+' in Batch '+esc(r.batch)+' also have '+r.cgpa+' CGPA</div>'
+    : '<div class="same-note u">&#10024; You have a unique CGPA in Batch '+esc(r.batch)+'</div>';
+  document.getElementById('result-card').innerHTML =
+    '<div class="r-wrap">'+
+      '<div class="r-head"><div class="r-name">'+esc(r.name)+'</div>'+
+        '<div class="r-meta">ID: '+esc(r.id)+'&nbsp;&middot;&nbsp;Batch '+esc(r.batch)+'</div></div>'+
+      '<div class="r-body">'+
+        '<div class="cgpa-blk"><div class="cgpa-n">'+r.cgpa+'</div><div class="cgpa-l">Cumulative GPA</div></div>'+
+        '<div class="perf '+perf.cls+'"><div class="perf-ico">'+perf.icon+'</div>'+
+          '<div><div class="perf-lbl">'+perf.label+'</div><div class="perf-cmt">'+perf.comment+'</div></div></div>'+
+        '<div class="r-strip"><div class="r-strip-ico">&#127963;</div>'+
+          '<div class="r-strip-txt">Ranked <strong>#'+r.deptRank+'</strong> among <strong>'+r.totalDept+'</strong> approved students in the department</div></div>'+
+        '<div class="r-strip"><div class="r-strip-ico">&#128101;</div>'+
+          '<div class="r-strip-txt">Ranked <strong>#'+r.batchRank+'</strong> among <strong>'+r.totalBatch+'</strong> students in Batch '+esc(r.batch)+'</div></div>'+
+        '<div class="pct-row">'+
+          '<div class="pct-box"><div class="pct-n">Top '+dpct+'%</div><div class="pct-l">Department</div></div>'+
+          '<div class="pct-box"><div class="pct-n">Top '+bpct+'%</div><div class="pct-l">Batch</div></div>'+
+        '</div>'+sameHtml+
+        '<table class="i-tbl">'+
+          '<tr><td class="l">Semester</td><td class="v">'+esc(r.semester)+'</td></tr>'+
+          '<tr><td class="l">Students above you</td><td class="v">'+(r.deptRank-1)+'</td></tr>'+
+          '<tr><td class="l">Students below you</td><td class="v">'+(r.totalDept-r.deptRank)+'</td></tr>'+
+          '<tr><td class="l">Total dept. students</td><td class="v">'+r.totalDept+'</td></tr>'+
+          '<tr><td class="l">Total batch students</td><td class="v">'+r.totalBatch+'</td></tr>'+
+        '</table>'+
+      '</div></div>';
+}
+
+// HELPERS
+function perfLabel(cgpa) {
+  if (cgpa>=3.91) return {cls:'Outstanding',   icon:'&#127775;', label:'Outstanding',      comment:'Exceptional achievement! You are at the pinnacle of academic excellence.'};
+  if (cgpa>=3.71) return {cls:'Excellent', icon:'&#127885;', label:'Excellent',    comment:'Brilliant performance! You are among the top performers of the department.'};
+  if (cgpa>=3.50) return {cls:'Very Good', icon:'&#128079;', label:'Very Good',    comment:'Great effort! A little more push will take you to the distinction level.'};
+  return                 {cls:'Keep Improving',     icon:'&#128170;', label:'Keep Improving', comment:'Keep working hard! Every effort brings you closer to your goal.'};
+}
+
+function medal(r) {
+  if (r===1) return '<div class="rk rk1">&#129351;</div>';
+  if (r===2) return '<div class="rk rk2">&#129352;</div>';
+  if (r===3) return '<div class="rk rk3">&#129353;</div>';
+  return '<div class="rk rkn">'+r+'</div>';
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Enter key support
+document.addEventListener('DOMContentLoaded', function() {
+  ['inp-id','inp-email'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('keydown', function(e){ if (e.key==='Enter') doSearch(); });
+  });
+  ['v-id','v-email'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('keydown', function(e){ if (e.key==='Enter') doVerify(); });
+  });
+});
 </script>
 </body>
 </html>
