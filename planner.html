@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Study Tracker & Long-term Planner</title>
 <style>
-/* Core Palette Shared with Main Portal Architecture */
 :root {
   --primary-deep: #1E3D08;
   --primary-mid: #3B6D11;
@@ -16,7 +15,6 @@
   --text-main: #1A1A18;
   --text-muted: #6B6B66;
   --border-color: #E0E0DA;
-  
   --blue-badge: #1557B0;
   --blue-bg: #EFF6FF;
   --orange-accent: #92540A;
@@ -24,228 +22,38 @@
   --red-accent: #991B1B;
   --red-bg: #FEE2E2;
 }
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: transparent; /* Seamless iframe integration */
-  color: var(--text-main);
-  font-size: 15px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Page Section Labels */
-.sec-lbl {
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
-/* Unified Premium Card Matrix */
-.card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  padding: 20px;
-}
-
-/* Headings */
-h2, .setup-headline {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--primary-deep);
-  margin-bottom: 6px;
-}
-.setup-sub {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 24px;
-}
-
-/* Form Fields */
-input[type="date"], input[type="number"], input[type="text"] {
-  width: 100%;
-  padding: 11px 13px;
-  font-size: 15px;
-  border: 1.5px solid var(--border-color);
-  border-radius: 9px;
-  background: #FAFAF8;
-  color: var(--text-main);
-  font-family: inherit;
-  outline: none;
-  -webkit-appearance: none;
-  appearance: none;
-  transition: border-color .2s, background-color .2s;
-}
-input:focus {
-  border-color: var(--primary-mid);
-  background: #ffffff;
-}
-
-.field-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 16px;
-}
-.field-group label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Preset Buttons */
-.preset-btns {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-}
-.preset-btn {
-  padding: 6px 14px;
-  background: #fff;
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  transition: 0.2s;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: transparent; color: var(--text-main); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.sec-lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 500; margin-bottom: 10px; }
+.card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; margin-bottom: 1rem; padding: 20px; }
+h2, .setup-headline { font-size: 22px; font-weight: 700; color: var(--primary-deep); margin-bottom: 6px; }
+.setup-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+input[type="date"], input[type="number"], input[type="text"] { width: 100%; padding: 11px 13px; font-size: 15px; border: 1.5px solid var(--border-color); border-radius: 9px; background: #FAFAF8; color: var(--text-main); font-family: inherit; outline: none; -webkit-appearance: none; appearance: none; transition: border-color .2s, background-color .2s; }
+input:focus { border-color: var(--primary-mid); background: #ffffff; }
+.field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.field-group label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.preset-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.preset-btn { padding: 6px 14px; background: #fff; border: 1px solid var(--border-color); border-radius: 20px; color: var(--text-muted); cursor: pointer; font-size: 12px; font-weight: 500; transition: 0.2s; }
 .preset-btn:hover { background: var(--bg-base); }
-.preset-btn.active {
-  background: var(--primary-mid);
-  border-color: var(--primary-mid);
-  color: #fff;
-}
-
-/* Category Row Elements */
-.cat-label-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-#category-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.cat-row {
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr auto;
-  gap: 8px;
-}
-.rm-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 9px;
-  border: none;
-  background: var(--red-bg);
-  color: var(--red-accent);
-  cursor: pointer;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.add-cat {
-  width: 100%;
-  padding: 11px;
-  border-radius: 9px;
-  border: 1.5px dashed var(--border-color);
-  background: transparent;
-  color: var(--primary-mid);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
+.preset-btn.active { background: var(--primary-mid); border-color: var(--primary-mid); color: #fff; }
+.cat-label-row { display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
+#category-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.cat-row { display: grid; grid-template-columns: 2fr 2fr 1fr auto; gap: 8px; }
+.rm-btn { width: 42px; height: 42px; border-radius: 9px; border: none; background: var(--red-bg); color: var(--red-accent); cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+.add-cat { width: 100%; padding: 11px; border-radius: 9px; border: 1.5px dashed var(--border-color); background: transparent; color: var(--primary-mid); font-size: 13px; font-weight: 600; cursor: pointer; }
 .add-cat:hover { background: var(--primary-light); }
-
-.gen-btn {
-  width: 100%;
-  padding: 13px;
-  background: var(--primary-mid);
-  color: #fff;
-  border: none;
-  border-radius: 9px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 12px;
-}
+.gen-btn { width: 100%; padding: 13px; background: var(--primary-mid); color: #fff; border: none; border-radius: 9px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; }
 .gen-btn:active { background: var(--primary-deep); }
-
-/* TRACKER ENGINE LAYOUT */
 #setup-screen { display: block; max-width: 600px; margin: 0 auto; padding: 10px; }
 #tracker-screen { display: none; flex-direction: column; gap: 12px; }
-
-/* Dashboard Headers */
-.t-header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-.t-header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.t-icon {
-  width: 40px;
-  height: 40px;
-  background: var(--primary-light);
-  color: var(--primary-deep);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
+.t-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.t-header-left { display: flex; align-items: center; gap: 12px; }
+.t-icon { width: 40px; height: 40px; background: var(--primary-light); color: var(--primary-deep); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .t-title { font-size: 18px; font-weight: 700; color: var(--primary-deep); }
 .t-started { font-size: 12px; color: var(--text-muted); }
-
-.reset-btn {
-  background: transparent;
-  border: 1.5px solid var(--border-color);
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted);
-  cursor: pointer;
-}
-
-/* Dashboard Information Layout grid */
-.dash-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-@media(min-width: 600px) {
-  .dash-grid { grid-template-columns: 1fr 1fr; }
-}
-
-/* Circular ring structure style overrides */
+.reset-btn { background: transparent; border: 1.5px solid var(--border-color); padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; color: var(--text-muted); cursor: pointer; }
+.dash-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media(min-width: 600px) { .dash-grid { grid-template-columns: 1fr 1fr; } }
 .overall-row { display: flex; gap: 20px; align-items: center; }
 .overall-left { display: flex; align-items: center; gap: 12px; }
 .ring-wrap { position: relative; width: 64px; height: 64px; }
@@ -254,13 +62,10 @@ input:focus {
 .ring-fill { fill: none; stroke: var(--primary-mid); stroke-width: 8; stroke-linecap: round; stroke-dasharray: 201; stroke-dashoffset: 201; transition: 0.5s; }
 .ring-lbl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--primary-deep); }
 .o-lbl { font-size: 11px; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px; }
-
 .days-stats { display: flex; flex-direction: column; gap: 8px; border-left: 1px solid var(--border-color); padding-left: 20px; }
 .day-stat { display: flex; align-items: center; gap: 8px; }
 .d-num { font-size: 18px; font-weight: 700; color: var(--primary-mid); }
 .d-text { font-size: 11px; color: var(--text-muted); text-transform: uppercase; line-height: 1.2; }
-
-/* Progress lists and bars metrics */
 .prog-title { font-size: 10px; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 10px; }
 .prog-list { display: flex; flex-direction: column; gap: 10px; }
 .prog-item { display: grid; grid-template-columns: 80px 1fr 35px; align-items: center; gap: 10px; }
@@ -268,8 +73,6 @@ input:focus {
 .p-bar-wrap { height: 7px; background: var(--bg-base); border-radius: 4px; overflow: hidden; }
 .p-bar { height: 100%; border-radius: 4px; transition: 0.4s; }
 .p-pct { font-size: 12px; font-weight: 700; text-align: right; color: var(--primary-deep); }
-
-/* Mini Calendar Frame styles */
 .mc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .mc-month { font-size: 13px; font-weight: 700; color: var(--primary-deep); }
 .mc-nav button { background: var(--bg-base); border: none; color: var(--text-main); width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; }
@@ -281,199 +84,53 @@ input:focus {
 .mc-cell.future { color: var(--text-muted); background: #FAFBF9; border: 1px solid var(--border-color); }
 .mc-cell.past { color: var(--primary-mid); background: var(--primary-light); }
 .mc-cell.today { background: var(--accent-green); color: #fff; font-weight: 700; }
-
-/* Navigation Pills Frame */
-.nav-row {
-  background: #fff;
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: sticky; top: 0; z-index: 10;
-}
+.nav-row { background: #fff; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 12px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
 .nav-lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); }
 .nav-pills { display: flex; gap: 6px; overflow-x: auto; }
 .nav-pills::-webkit-scrollbar { display: none; }
-.nav-btn {
-  padding: 5px 12px; border-radius: 15px; border: 1px solid var(--border-color);
-  background: var(--bg-base); color: var(--text-muted);
-  font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
-}
+.nav-btn { padding: 5px 12px; border-radius: 15px; border: 1px solid var(--border-color); background: var(--bg-base); color: var(--text-muted); font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 .nav-btn.active { background: var(--primary-deep); color: #fff; border-color: var(--primary-deep); }
-
-/* WEEK ROW INTERFACES & CARDS */
 .tracker-content { display: flex; flex-direction: column; gap: 16px; margin-top: 4px; }
 .week-section { border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; background: #fff; }
-.week-header {
-  background: linear-gradient(135deg, var(--primary-deep), var(--primary-mid));
-  color: #fff;
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.week-header { background: linear-gradient(135deg, var(--primary-deep), var(--primary-mid)); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
 .wh-title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; }
 .wh-title span { color: var(--accent-olive); font-size: 15px; margin-left: 4px; }
 .wh-pct { font-weight: 700; font-size: 14px; color: var(--primary-light); }
-
 .cards-container { display: flex; flex-direction: column; }
 .cat-card { padding: 16px; border-bottom: 1px solid var(--border-color); }
 .cat-card:last-child { border-bottom: none; }
-
 .cc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .cc-name { font-size: 15px; font-weight: 700; color: var(--primary-deep); }
 .cc-target { font-size: 12px; color: var(--text-muted); }
 .cc-top-right { display: flex; align-items: center; gap: 8px; }
-
-/* Custom Remaining Counter Circle */
-.rem-circle {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--blue-bg); color: var(--blue-badge);
-  font-size: 12px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  border: 1px solid #93C5FD;
-}
-.pct-chip {
-  padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;
-  background: var(--orange-bg); color: var(--orange-accent); border: 1px solid #FDE68A;
-}
+.rem-circle { width: 28px; height: 28px; border-radius: 50%; background: var(--blue-bg); color: var(--blue-badge); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 1px solid #93C5FD; }
+.pct-chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; background: var(--orange-bg); color: var(--orange-accent); border: 1px solid #FDE68A; }
 .pct-chip.full { background: var(--primary-light); color: var(--primary-deep); border-color: var(--accent-olive); }
 .pct-chip.zero { background: var(--bg-base); color: var(--text-muted); border-color: var(--border-color); }
-
-/* Theme-Matched Orange Box Framework */
-.orange-box {
-  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
-  border: 2px solid var(--accent-olive);
-  background: var(--bg-base);
-  border-radius: 8px;
-  padding: 4px 6px;
-  margin-bottom: 8px;
-}
+.orange-box { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; border: 2px solid var(--accent-olive); background: var(--bg-base); border-radius: 8px; padding: 4px 6px; margin-bottom: 8px; }
 .ob-day { text-align: center; font-size: 11px; font-weight: 700; color: var(--primary-deep); }
-
-/* Unified Circular Study Block Controls */
 .checks-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; padding: 0 4px; }
 .check-btn-wrap { display: flex; justify-content: center; }
-.check-btn {
-  width: 100%; aspect-ratio: 1; max-width: 40px;
-  border-radius: 50%; border: 1.5px solid var(--border-color);
-  background: #fff; color: transparent;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.15s;
-  user-select: none;
-}
+.check-btn { width: 100%; aspect-ratio: 1; max-width: 40px; border-radius: 50%; border: 1.5px solid var(--border-color); background: #fff; color: transparent; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.15s; user-select: none; }
 .check-btn.done { background: var(--primary-mid); border-color: var(--primary-mid); color: #fff; }
 .check-btn.blocked { background: var(--bg-base); border-color: var(--border-color); color: var(--border-color); cursor: not-allowed; opacity: 0.5; }
 .check-btn:not(.blocked):hover { border-color: var(--accent-green); transform: scale(1.05); }
-
-/* Global System Notification Banner */
-.toast {
-  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--primary-deep); color: #fff; padding: 10px 20px; border-radius: 8px;
-  font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 100;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--primary-deep); color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* Live Users Bar */
-.live-users-bar {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: #1E3D08;
-  border-radius: 14px;
-  padding: 14px 18px;
-  margin-bottom: 14px;
-  border: 1.5px solid #3B6D11;
-}
-.live-dot-wrap {
-  position: relative;
-  width: 14px; height: 14px;
-  flex-shrink: 0;
-}
-.live-dot {
-  width: 14px; height: 14px; border-radius: 50%;
-  background: #76B82A;
-  position: absolute; inset: 0;
-  animation: live-pulse 1.8s ease-out infinite;
-}
-.live-dot-ring {
-  width: 14px; height: 14px; border-radius: 50%;
-  border: 2px solid #76B82A;
-  position: absolute; inset: 0;
-  animation: live-ring 1.8s ease-out infinite;
-  opacity: 0;
-}
-@keyframes live-pulse {
-  0%,100% { transform: scale(1); opacity: 1; }
-  50%      { transform: scale(0.85); opacity: 0.8; }
-}
-@keyframes live-ring {
-  0%   { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(2.4); opacity: 0; }
-}
-.live-users-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-.live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(118,184,42,0.18);
-  border: 1px solid rgba(118,184,42,0.4);
-  border-radius: 20px;
-  padding: 2px 9px;
-  font-size: 10px;
-  font-weight: 700;
-  color: #97C459;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  width: fit-content;
-  margin-bottom: 3px;
-}
-.live-users-text {
-  font-size: 13px;
-  font-weight: 500;
-  color: #97C459;
-  opacity: 0.85;
-}
-.live-users-count-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: rgba(118,184,42,0.15);
-  border: 1.5px solid rgba(118,184,42,0.45);
-  border-radius: 12px;
-  padding: 6px 16px;
-  min-width: 60px;
-}
-.live-users-count {
-  font-size: 34px;
-  font-weight: 800;
-  color: #C8E89A;
-  line-height: 1;
-  letter-spacing: -1px;
-  font-variant-numeric: tabular-nums;
-}
-.live-users-unit {
-  font-size: 10px;
-  font-weight: 600;
-  color: #76B82A;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-@media (max-width: 480px) {
-  .cat-row { grid-template-columns: 1fr; gap: 4px; }
-  .cat-row .rm-btn { width: 100%; height: 36px; }
-  .check-btn { font-size: 11px; }
-}
+.live-users-bar { display: none; align-items: center; gap: 14px; background: #1E3D08; border-radius: 14px; padding: 14px 18px; margin-bottom: 14px; border: 1.5px solid #3B6D11; }
+.live-users-bar.visible { display: flex; }
+.live-dot-wrap { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+.live-dot { width: 14px; height: 14px; border-radius: 50%; background: #76B82A; position: absolute; inset: 0; animation: live-pulse 1.8s ease-out infinite; }
+.live-dot-ring { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #76B82A; position: absolute; inset: 0; animation: live-ring 1.8s ease-out infinite; opacity: 0; }
+@keyframes live-pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.85); opacity: 0.8; } }
+@keyframes live-ring { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.4); opacity: 0; } }
+.live-users-info { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+.live-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(118,184,42,0.18); border: 1px solid rgba(118,184,42,0.4); border-radius: 20px; padding: 2px 9px; font-size: 10px; font-weight: 700; color: #97C459; letter-spacing: 1.5px; text-transform: uppercase; width: fit-content; margin-bottom: 3px; }
+.live-users-text { font-size: 13px; font-weight: 500; color: #97C459; opacity: 0.85; }
+.live-users-count-wrap { display: flex; flex-direction: column; align-items: center; background: rgba(118,184,42,0.15); border: 1.5px solid rgba(118,184,42,0.45); border-radius: 12px; padding: 6px 16px; min-width: 60px; }
+.live-users-count { font-size: 34px; font-weight: 800; color: #C8E89A; line-height: 1; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+.live-users-unit { font-size: 10px; font-weight: 600; color: #76B82A; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+@media (max-width: 480px) { .cat-row { grid-template-columns: 1fr; gap: 4px; } .cat-row .rm-btn { width: 100%; height: 36px; } .check-btn { font-size: 11px; } }
 </style>
 </head>
 <body>
@@ -481,13 +138,11 @@ input:focus {
 <div id="setup-screen">
   <div class="setup-headline">Build your plan.</div>
   <div class="setup-sub">Enter your overall study duration and up to 10 categories with custom day targets.</div>
-
   <div class="card">
     <div class="field-group">
       <label>Start Date</label>
       <input type="date" id="start-date">
     </div>
-
     <div class="field-group">
       <label>Overall Duration (Days)</label>
       <div class="preset-btns" id="duration-presets">
@@ -499,9 +154,7 @@ input:focus {
       </div>
       <input type="number" id="total-days" min="7" max="365" placeholder="Total overall days...">
     </div>
-
     <div style="height: 1px; background: var(--border-color); margin: 16px 0;"></div>
-
     <div>
       <div class="cat-label-row">
         <span>Categories</span>
@@ -510,13 +163,11 @@ input:focus {
       <div id="category-list"></div>
       <button class="add-cat" id="add-cat-btn">＋ Add category</button>
     </div>
-
     <button class="gen-btn" onclick="generateTracker()">Generate Tracker →</button>
   </div>
 </div>
 
 <div id="tracker-screen">
-  
   <div class="card" style="margin-bottom:0;">
     <div class="live-users-bar" id="live-users-bar">
       <div class="live-dot-wrap">
@@ -542,7 +193,6 @@ input:focus {
       </div>
       <button class="reset-btn" onclick="resetTracker()">↩ New</button>
     </div>
-
     <div class="dash-grid">
       <div style="background: var(--bg-base); padding: 14px; border-radius: 10px;">
         <div class="overall-row">
@@ -561,13 +211,11 @@ input:focus {
             <div class="day-stat"><span class="d-num" id="d-left">7</span><span class="d-text" style="color:var(--text-muted)">Remaining</span></div>
           </div>
         </div>
-
         <div style="margin-top:16px;">
           <div class="prog-title">Category Progress</div>
           <div class="prog-list" id="d-cats"></div>
         </div>
       </div>
-
       <div style="background: var(--bg-base); padding: 14px; border-radius: 10px;">
         <div class="mc-header">
           <div class="mc-month" id="mc-month">June 2026</div>
@@ -577,20 +225,16 @@ input:focus {
           </div>
         </div>
         <div class="mc-grid" id="mc-grid" style="margin-bottom:14px;"></div>
-        
         <div class="prog-title">Weekly Breakdown</div>
         <div class="prog-list" id="d-weeks" style="max-height:100px; overflow-y:auto; padding-right:4px;"></div>
       </div>
     </div>
   </div>
-
   <div class="nav-row">
     <span class="nav-lbl">WEEK</span>
     <div class="nav-pills" id="nav-pills"></div>
   </div>
-
   <div class="tracker-content" id="tracker-content"></div>
-
 </div>
 
 <div class="toast" id="toast"></div>
@@ -609,13 +253,8 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
     e.target.classList.add('active');
     const val = e.target.getAttribute('data-days');
     const input = document.getElementById('total-days');
-    if (val === 'custom') {
-      input.style.display = 'block';
-      input.focus();
-    } else {
-      input.style.display = 'none';
-      input.value = val;
-    }
+    if (val === 'custom') { input.style.display = 'block'; input.focus(); }
+    else { input.style.display = 'none'; input.value = val; }
   };
 });
 
@@ -641,7 +280,6 @@ function updateCatCount() {
   document.getElementById('add-cat-btn').style.display = n >= maxCats ? 'none' : 'block';
 }
 
-// System Presets Configuration Matching Main Framework Models
 addCat('Botany','Chapter 1', 7);
 addCat('Agronomy','Chap 2', 14);
 addCat('Soil Science','Chap 3', 7);
@@ -651,31 +289,22 @@ function generateTracker() {
   const totalDays = parseInt(document.getElementById('total-days').value);
   if (!startVal) return toast('Pick a start date');
   if (!totalDays || totalDays < 7) return toast('Minimum 7 days');
-
   const cats = [];
   let exceedError = false;
-
   document.querySelectorAll('.cat-row').forEach(r => {
     const n = r.querySelector('.cn').value.trim();
     const t = r.querySelector('.ct').value.trim();
     const d = parseInt(r.querySelector('.cd').value);
-    
-    if (n && !isNaN(d) && d > totalDays) {
-      exceedError = true;
-    }
-    
+    if (n && !isNaN(d) && d > totalDays) exceedError = true;
     if (n) cats.push({ name: n, target: t || '—', targetDays: isNaN(d) || d < 1 ? totalDays : d });
   });
-
   if (exceedError) return toast('Category days cannot exceed overall duration');
   if (!cats.length) return toast('Add at least one category');
-
   const numWeeks = Math.ceil(totalDays / 7);
   const weeks = Array.from({ length: numWeeks }, (_, i) => ({
     wk: i + 1,
-    rows: cats.map((c, catIdx) => ({ section: c.name, target: c.target, catIdx: catIdx, days: Array(7).fill(false) }))
+    rows: cats.map((c, catIdx) => ({ section: c.name, target: c.target, catIdx, days: Array(7).fill(false) }))
   }));
-
   data = { startDate: startVal, totalDays, categories: cats, weeks };
   save(); render();
 }
@@ -694,14 +323,14 @@ function getCatProgress(catIdx) {
 function render() {
   document.getElementById('setup-screen').style.display = 'none';
   document.getElementById('tracker-screen').style.display = 'flex';
-
   document.getElementById('t-title').textContent = `${data.totalDays}-Day Study Plan`;
   document.getElementById('t-start-date').textContent = `Started ${new Date(data.startDate).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'})}`;
-
   calViewDate = null;
   buildNav();
   buildCards();
   updateDash();
+  // Start live count whenever tracker is shown
+  startLive();
 }
 
 function buildNav() {
@@ -723,30 +352,23 @@ function buildNav() {
 function buildCards() {
   const container = document.getElementById('tracker-content');
   container.innerHTML = '';
-
   data.weeks.forEach(w => {
     const sec = document.createElement('div');
     sec.className = 'week-section';
     sec.id = `w-sec-${w.wk}`;
-
     const wPct = calcPct(w.rows.flatMap(r => r.days));
-    
     const hdr = document.createElement('div');
     hdr.className = 'week-header';
     hdr.innerHTML = `<div class="wh-title">WEEK <span>${w.wk}</span></div><div class="wh-pct" id="wh-pct-${w.wk}">${wPct}%</div>`;
     sec.appendChild(hdr);
-
     const cardsWrap = document.createElement('div');
     cardsWrap.className = 'cards-container';
-
     w.rows.forEach((row, ri) => {
       const card = document.createElement('div');
       card.className = 'cat-card';
-      
       const prog = getCatProgress(row.catIdx);
       const chipClass = prog.pct >= 100 ? 'full' : prog.pct > 0 ? '' : 'zero';
-      
-      let html = `
+      card.innerHTML = `
         <div class="cc-top">
           <div>
             <div class="cc-name">${row.section}</div>
@@ -763,17 +385,13 @@ function buildCards() {
         </div>
         <div class="checks-row">
       `;
-      card.innerHTML = html;
-      
       const checksRow = card.querySelector('.checks-row');
       row.days.forEach((done, di) => {
         const wrap = document.createElement('div'); wrap.className = 'check-btn-wrap';
         const btn = document.createElement('div');
-        
         let btnClass = 'check-btn';
         if (done) btnClass += ' done';
         else if (prog.checked >= prog.target) btnClass += ' blocked';
-
         btn.className = btnClass;
         btn.innerHTML = done ? '✓' : '·';
         btn.id = `btn-w${w.wk}-cat${row.catIdx}-d${di}`;
@@ -781,10 +399,8 @@ function buildCards() {
         wrap.appendChild(btn);
         checksRow.appendChild(wrap);
       });
-
       cardsWrap.appendChild(card);
     });
-
     sec.appendChild(cardsWrap);
     container.appendChild(sec);
   });
@@ -793,14 +409,9 @@ function buildCards() {
 function updateCategoryUI(catIdx) {
   const prog = getCatProgress(catIdx);
   const chipClass = prog.pct >= 100 ? 'full' : prog.pct > 0 ? '' : 'zero';
-
   data.weeks.forEach(w => {
     const chip = document.getElementById(`chip-w${w.wk}-cat${catIdx}`);
-    if (chip) {
-      chip.textContent = `${prog.pct}%`;
-      chip.className = 'pct-chip ' + chipClass;
-    }
-    
+    if (chip) { chip.textContent = `${prog.pct}%`; chip.className = 'pct-chip ' + chipClass; }
     const row = w.rows.find(r => r.catIdx === catIdx);
     if (row) {
       row.days.forEach((done, di) => {
@@ -821,18 +432,14 @@ function toggle(wk, ri, di, catIdx) {
   const w = data.weeks.find(x => x.wk === wk);
   const isDone = w.rows[ri].days[di];
   const progBefore = getCatProgress(catIdx);
-  
   if (!isDone && progBefore.checked >= progBefore.target) {
     toast(`Target of ${progBefore.target} days reached for this category!`);
     return;
   }
-
   w.rows[ri].days[di] = !isDone;
   updateCategoryUI(catIdx);
-
   const wPct = calcPct(w.rows.flatMap(r => r.days));
   document.getElementById(`wh-pct-${wk}`).textContent = `${wPct}%`;
-
   save();
   updateDash();
 }
@@ -840,56 +447,31 @@ function toggle(wk, ri, di, catIdx) {
 function updateDash() {
   const sd = new Date(data.startDate); sd.setHours(0,0,0,0);
   const today = new Date(); today.setHours(0,0,0,0);
-  
   const elapsed = Math.max(0, Math.min(data.totalDays, Math.floor((today - sd) / 86400000)));
-  
   document.getElementById('d-passed').textContent = elapsed;
   document.getElementById('d-left').textContent = Math.max(0, data.totalDays - elapsed);
-
-  let totalTargets = 0;
-  let allCompleted = 0;
+  let totalTargets = 0, allCompleted = 0;
   const catDiv = document.getElementById('d-cats');
   catDiv.innerHTML = '';
-
   data.categories.forEach((cat, idx) => {
     const completedDaysForCat = data.weeks.flatMap(w => w.rows.filter(r => r.catIdx === idx).flatMap(r => r.days)).filter(Boolean).length;
-    
     totalTargets += cat.targetDays;
     allCompleted += completedDaysForCat;
-
     const remainingCatDays = Math.max(0, cat.targetDays - completedDaysForCat);
-    document.querySelectorAll(`.rem-circle-cat-${idx}`).forEach(el => {
-      el.textContent = remainingCatDays;
-    });
-
-    const p = Math.min(100, Math.round((completedDaysForCat / cat.targetDays) * 100)) || 0; 
+    document.querySelectorAll(`.rem-circle-cat-${idx}`).forEach(el => { el.textContent = remainingCatDays; });
+    const p = Math.min(100, Math.round((completedDaysForCat / cat.targetDays) * 100)) || 0;
     const col = colors[idx % colors.length];
-    
-    catDiv.innerHTML += `
-      <div class="prog-item">
-        <span class="p-name">${cat.name}</span>
-        <div class="p-bar-wrap"><div class="p-bar" style="width:${p}%; background:${col}"></div></div>
-        <span class="p-pct" style="color:${col}">${p}%</span>
-      </div>`;
+    catDiv.innerHTML += `<div class="prog-item"><span class="p-name">${cat.name}</span><div class="p-bar-wrap"><div class="p-bar" style="width:${p}%; background:${col}"></div></div><span class="p-pct" style="color:${col}">${p}%</span></div>`;
   });
-
   const globalPct = Math.min(100, Math.round((allCompleted / totalTargets) * 100)) || 0;
   document.getElementById('d-overall').textContent = globalPct + '%';
-  const arc = document.getElementById('ring-arc');
-  arc.style.strokeDashoffset = 201 - (globalPct / 100) * 201;
-
+  document.getElementById('ring-arc').style.strokeDashoffset = 201 - (globalPct / 100) * 201;
   const wDiv = document.getElementById('d-weeks');
   wDiv.innerHTML = '';
   data.weeks.forEach((w) => {
     const p = calcPct(w.rows.flatMap(r => r.days));
-    wDiv.innerHTML += `
-      <div class="prog-item">
-        <span class="p-name">Week ${w.wk}</span>
-        <div class="p-bar-wrap"><div class="p-bar" style="width:${p}%; background:var(--primary-mid)"></div></div>
-        <span class="p-pct">${p}%</span>
-      </div>`;
+    wDiv.innerHTML += `<div class="prog-item"><span class="p-name">Week ${w.wk}</span><div class="p-bar-wrap"><div class="p-bar" style="width:${p}%; background:var(--primary-mid)"></div></div><span class="p-pct">${p}%</span></div>`;
   });
-
   buildMiniCal();
 }
 
@@ -902,20 +484,13 @@ function buildMiniCal() {
   const sd = new Date(data.startDate); sd.setHours(0,0,0,0);
   const ed = new Date(sd); ed.setDate(ed.getDate() + data.totalDays - 1);
   const today = new Date(); today.setHours(0,0,0,0);
-
   if (!calViewDate) calViewDate = new Date(today.getFullYear(), today.getMonth(), 1);
-
   const y = calViewDate.getFullYear(), m = calViewDate.getMonth();
   document.getElementById('mc-month').textContent = calViewDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-
   grid.innerHTML = '';
-  ['S','M','T','W','T','F','S'].forEach(d => {
-    grid.innerHTML += `<div class="mc-dow">${d}</div>`;
-  });
-
+  ['S','M','T','W','T','F','S'].forEach(d => { grid.innerHTML += `<div class="mc-dow">${d}</div>`; });
   const firstDay = new Date(y, m, 1).getDay();
   for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="mc-cell empty"></div>`;
-
   const daysInMonth = new Date(y, m + 1, 0).getDate();
   for (let d = 1; d <= daysInMonth; d++) {
     const cDate = new Date(y, m, d); cDate.setHours(0,0,0,0);
@@ -924,7 +499,6 @@ function buildMiniCal() {
     else if (cDate.getTime() === today.getTime()) cls += ' today';
     else if (cDate < today) cls += ' past';
     else cls += ' future';
-    
     grid.innerHTML += `<div class="${cls}">${d}</div>`;
   }
 }
@@ -935,7 +509,7 @@ function toast(msg) {
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
 }
-function save() { localStorage.setItem('strack4', JSON.stringify(data)); } 
+function save() { localStorage.setItem('strack4', JSON.stringify(data)); }
 function resetTracker() {
   if (!confirm('Clear all progress?')) return;
   localStorage.removeItem('strack4'); data = null;
@@ -943,27 +517,28 @@ function resetTracker() {
   document.getElementById('setup-screen').style.display = 'block';
 }
 
-
 // ── LIVE USER COUNT via Firebase Realtime Database ───────────────
-(function() {
-  var MIN_COUNT = 5;
-  // ▼▼▼ PASTE YOUR FIREBASE CONFIG HERE ▼▼▼
-  var FB_URL = 'https://agri-portal-3433d-default-rtdb.firebaseio.com';
-  // ▲▲▲ Replace with your actual Firebase project URL ▲▲▲
+// Shows the real number of other people currently on the tracker.
+// The bar is hidden entirely when nobody else (count 0) is online,
+// rather than showing a placeholder or padded number.
+var _liveInterval = null;
 
+function startLive() {
+  if (_liveInterval) return; // already running
+
+  var FB_URL      = 'https://agri-portal-3433d-default-rtdb.firebaseio.com';
   var SESSION_KEY = 'ps_' + Math.random().toString(36).slice(2, 10);
-  var HEARTBEAT_MS = 20000;  // ping every 20s
-  var EXPIRE_MS    = 60000;  // session expires after 60s silence
+  var HEARTBEAT_MS = 20000;
+  var EXPIRE_MS    = 60000;
 
-  var _interval = null;
-  var _countEl  = null;
+  var bar = document.getElementById('live-users-bar');
 
   function setCount(n) {
-    if (!_countEl) _countEl = document.getElementById('live-users-count');
-    if (_countEl) _countEl.textContent = Math.max(MIN_COUNT, n);
+    var el = document.getElementById('live-users-count');
+    if (el) el.textContent = n;
+    if (bar) bar.classList.toggle('visible', n > 0);
   }
 
-  // Write own heartbeat timestamp to Firebase
   function ping() {
     fetch(FB_URL + '/planner_sessions/' + SESSION_KEY + '.json', {
       method: 'PUT',
@@ -971,74 +546,47 @@ function resetTracker() {
     }).catch(function(){});
   }
 
-  // Remove own session on tab close (best-effort)
   function removeSelf() {
     var url = FB_URL + '/planner_sessions/' + SESSION_KEY + '.json';
-    // Use sendBeacon for reliability on page unload
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(url + '?method=DELETE', '');
-    }
+    if (navigator.sendBeacon) navigator.sendBeacon(url + '?method=DELETE', '');
     fetch(url, { method: 'DELETE', keepalive: true }).catch(function(){});
   }
 
-  // Read all sessions, prune stale ones, update display
   function syncCount() {
     fetch(FB_URL + '/planner_sessions.json')
       .then(function(r){ return r.json(); })
       .then(function(sessions) {
         if (!sessions || typeof sessions !== 'object') { setCount(0); return; }
-        var now   = Date.now();
-        var alive = 0;
-        var stale = [];
+        var now = Date.now(), alive = 0, stale = [];
         Object.keys(sessions).forEach(function(k) {
           var ts = sessions[k] && sessions[k].t;
-          if (ts && (now - ts) < EXPIRE_MS) {
-            alive++;
-          } else {
-            stale.push(k);
-          }
+          if (ts && (now - ts) < EXPIRE_MS) alive++;
+          else stale.push(k);
         });
-        setCount(alive);
-        // Prune stale sessions from DB (any visitor helps clean up)
+        // Don't count this tab's own session in the displayed number —
+        // the bar communicates "others online", not "total sessions".
+        var others = Math.max(0, alive - (sessions[SESSION_KEY] ? 1 : 0));
+        setCount(others);
         stale.forEach(function(k) {
           fetch(FB_URL + '/planner_sessions/' + k + '.json', { method: 'DELETE' }).catch(function(){});
         });
       })
-      .catch(function(){ /* network error — keep previous count */ });
+      .catch(function(){});
   }
 
-  function startLive() {
-    if (_interval) return;
-    ping();           // register immediately
-    syncCount();      // read count immediately
-    _interval = setInterval(function() {
-      ping();
-      syncCount();
-    }, HEARTBEAT_MS);
-  }
-
-  // Hook into render() so live count starts when tracker opens
-  var _origRender = render;
-  render = function() {
-    _origRender.apply(this, arguments);
-    startLive();
-  };
+  ping();
+  syncCount();
+  _liveInterval = setInterval(function() { ping(); syncCount(); }, HEARTBEAT_MS);
 
   window.addEventListener('beforeunload', removeSelf);
-  window.addEventListener('pagehide',     removeSelf);
+  window.addEventListener('pagehide', removeSelf);
+}
 
-  // If tracker already visible on load (returning user with saved data)
-  if (document.getElementById('tracker-screen') &&
-      document.getElementById('tracker-screen').style.display !== 'none') {
-    startLive();
-  }
-})();
-
+// Load saved data
 try {
-  const raw = localStorage.getItem('strack4'); 
-  if (raw) { data = JSON.parse(raw); render(); }
+  const raw = localStorage.getItem('strack4');
+  if (raw) { data = JSON.parse(raw); render(); } // render() calls startLive() internally
 } catch {}
-
 </script>
 </body>
 </html>
