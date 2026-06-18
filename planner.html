@@ -381,36 +381,92 @@ input:focus {
 .live-users-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, #1E3D08, #3B6D11);
-  border-radius: 10px;
-  padding: 10px 16px;
+  gap: 14px;
+  background: #1E3D08;
+  border-radius: 14px;
+  padding: 14px 18px;
   margin-bottom: 14px;
+  border: 1.5px solid #3B6D11;
 }
-.live-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #76B82A;
-  box-shadow: 0 0 0 0 rgba(118,184,42,0.7);
-  animation: live-pulse 1.6s ease-out infinite;
+.live-dot-wrap {
+  position: relative;
+  width: 14px; height: 14px;
   flex-shrink: 0;
 }
+.live-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #76B82A;
+  position: absolute; inset: 0;
+  animation: live-pulse 1.8s ease-out infinite;
+}
+.live-dot-ring {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid #76B82A;
+  position: absolute; inset: 0;
+  animation: live-ring 1.8s ease-out infinite;
+  opacity: 0;
+}
 @keyframes live-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(118,184,42,0.7); }
-  70%  { box-shadow: 0 0 0 7px rgba(118,184,42,0); }
-  100% { box-shadow: 0 0 0 0 rgba(118,184,42,0); }
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(0.85); opacity: 0.8; }
+}
+@keyframes live-ring {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.live-users-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(118,184,42,0.18);
+  border: 1px solid rgba(118,184,42,0.4);
+  border-radius: 20px;
+  padding: 2px 9px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #97C459;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  width: fit-content;
+  margin-bottom: 3px;
 }
 .live-users-text {
   font-size: 13px;
-  font-weight: 600;
-  color: #EAF3DE;
-  flex: 1;
+  font-weight: 500;
+  color: #97C459;
+  opacity: 0.85;
+}
+.live-users-count-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(118,184,42,0.15);
+  border: 1.5px solid rgba(118,184,42,0.45);
+  border-radius: 12px;
+  padding: 6px 16px;
+  min-width: 60px;
 }
 .live-users-count {
-  font-size: 20px;
+  font-size: 34px;
   font-weight: 800;
-  color: #97C459;
-  min-width: 32px;
-  text-align: right;
+  color: #C8E89A;
+  line-height: 1;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+}
+.live-users-unit {
+  font-size: 10px;
+  font-weight: 600;
+  color: #76B82A;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 2px;
 }
 
 @media (max-width: 480px) {
@@ -463,9 +519,18 @@ input:focus {
   
   <div class="card" style="margin-bottom:0;">
     <div class="live-users-bar" id="live-users-bar">
-      <div class="live-dot"></div>
-      <div class="live-users-text">Students using planner right now</div>
-      <div class="live-users-count" id="live-users-count">—</div>
+      <div class="live-dot-wrap">
+        <div class="live-dot"></div>
+        <div class="live-dot-ring"></div>
+      </div>
+      <div class="live-users-info">
+        <div class="live-badge">&#9679; Live</div>
+        <div class="live-users-text">Students using planner right now</div>
+      </div>
+      <div class="live-users-count-wrap">
+        <div class="live-users-count" id="live-users-count">—</div>
+        <div class="live-users-unit">online</div>
+      </div>
     </div>
     <div class="t-header-top">
       <div class="t-header-left">
