@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="google-site-verification" content="X8AAAAwzUF2h9M1CjJPKIJxtiac6DrCfFkXVTVSw6UA" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="mobile-web-app-capable" content="yes">
@@ -166,6 +167,14 @@ input:focus{border-color:#3B6D11;background:#fff;}
 .bt-row:last-child{border-bottom:none;}
 .same-bdg{font-size:10px;background:#E8F5E9;color:#2E7D32;border-radius:8px;padding:2px 6px;white-space:nowrap;}
 
+/* MARQUEE */
+.marquee-bar{background:#1E3D08;color:#C0DD97;padding:7px 0;overflow:hidden;white-space:nowrap;font-size:12.5px;font-weight:500;letter-spacing:.2px;border-bottom:1px solid #2E5E0E;}
+.marquee-track{display:inline-block;animation:marquee-scroll 28s linear infinite;}
+.marquee-track:hover{animation-play-state:paused;}
+@keyframes marquee-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.marquee-item{display:inline-block;padding:0 32px;}
+.marquee-dot{color:#76B82A;margin:0 4px;}
+
 /* FOOTER */
 .footer{text-align:center;padding:1.5rem 1rem;font-size:12px;color:#9B9B96;border-top:1px solid #E0E0DA;background:#fff;margin-top:2rem;}
 .footer a{color:#3B6D11;text-decoration:none;}
@@ -188,6 +197,18 @@ input:focus{border-color:#3B6D11;background:#fff;}
 </div>
 
 <div id="app" style="display:none">
+
+  <!-- MARQUEE BANNER -->
+  <div class="marquee-bar">
+    <div class="marquee-track" id="marquee-track">
+      <span class="marquee-item">&#127807; The more students register, the more accurate and complete our rankings become — share this portal with your friends and tell them to register now!</span><span class="marquee-dot">&#9670;</span>
+      <span class="marquee-item">&#128218; Get access to Lecture Slides, Notes, Books PDF &amp; Daily Newspaper — invite your friends to register and unlock the best resources together!</span><span class="marquee-dot">&#9670;</span>
+      <span class="marquee-item">&#128101; A bigger community = a better result picture for everyone — share with your classmates and help build the most complete department ranking!</span><span class="marquee-dot">&#9670;</span>
+      <span class="marquee-item">&#127807; The more students register, the more accurate and complete our rankings become — share this portal with your friends and tell them to register now!</span><span class="marquee-dot">&#9670;</span>
+      <span class="marquee-item">&#128218; Get access to Lecture Slides, Notes, Books PDF &amp; Daily Newspaper — invite your friends to register and unlock the best resources together!</span><span class="marquee-dot">&#9670;</span>
+      <span class="marquee-item">&#128101; A bigger community = a better result picture for everyone — share with your classmates and help build the most complete department ranking!</span><span class="marquee-dot">&#9670;</span>
+    </div>
+  </div>
 
   <div class="reg-bar">
     <span>&#128203; New student? Register your result for ranking</span>
@@ -452,23 +473,40 @@ function lockAll() {
 function renderAll() {
   document.getElementById('h-sem').textContent  = DATA.semester.toUpperCase();
   document.getElementById('h-dept').textContent = DATA.deptName;
-  renderStats(DATA.stats);
+
+  // Compute top batch by average CGPA from batchTops
+  var batchTops = DATA.batchTops;
+  var batches = Object.keys(batchTops);
+  var bestBatch = DATA.stats.topBatch;
+  var bestAvg   = -1;
+  for (var i = 0; i < batches.length; i++) {
+    var students = batchTops[batches[i]];
+    if (!students || students.length === 0) continue;
+    var sum = 0;
+    for (var j = 0; j < students.length; j++) sum += parseFloat(students[j].cgpa) || 0;
+    var avg = sum / students.length;
+    if (avg > bestAvg) { bestAvg = avg; bestBatch = batches[i]; }
+  }
+  var topBatchDisplay = 'Batch ' + bestBatch + (bestAvg > 0 ? ' (' + bestAvg.toFixed(2) + ')' : '');
+
+  renderStats(DATA.stats, topBatchDisplay);
   renderDist(DATA.dist);
   renderTop20(DATA.top20, DATA.stats.approved);
   renderBatches(DATA.batchTops);
 }
 
 // STATS
-function renderStats(s) {
+function renderStats(s, topBatchDisplay) {
+  var topBatchVal = topBatchDisplay || ('Batch ' + s.topBatch);
   var items = [
-    {l:'Total Registered',     v:s.registered,        c:''},
-    {l:'Approved Students',    v:s.approved,          c:'g'},
-    {l:'CGPA to Enter Top 20', v:s.cgpaToTop20,       c:'a'},
-    {l:'Active Batches',       v:s.batches,           c:'b'},
-    {l:'Highest CGPA',         v:s.highCGPA,          c:'g'},
-    {l:'Dept. Average CGPA',   v:s.avgCGPA,           c:''},
-    {l:'Top Ranked Batch',     v:'Batch '+s.topBatch, c:'g sm'},
-    {l:'Last Updated',         v:s.lastUpdated,       c:'sm'},
+    {l:'Total Registered',     v:s.registered,   c:''},
+    {l:'Approved Students',    v:s.approved,      c:'g'},
+    {l:'CGPA to Enter Top 20', v:s.cgpaToTop20,   c:'a'},
+    {l:'Active Batches',       v:s.batches,       c:'b'},
+    {l:'Highest CGPA',         v:s.highCGPA,      c:'g'},
+    {l:'Dept. Average CGPA',   v:s.avgCGPA,       c:''},
+    {l:'Top Ranked Batch',     v:topBatchVal,     c:'g sm'},
+    {l:'Last Updated',         v:s.lastUpdated,   c:'sm'},
   ];
   var h = '';
   for (var i = 0; i < items.length; i++) {
