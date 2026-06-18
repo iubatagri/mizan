@@ -944,54 +944,80 @@ function resetTracker() {
 }
 
 
-// ── LIVE USER COUNT ──────────────────────────────────────────────
+// ── LIVE USER COUNT via Firebase Realtime Database ───────────────
 (function() {
   var MIN_COUNT = 5;
-  var SESSION_KEY = 'planner_session_' + Math.random().toString(36).slice(2);
-  var STORAGE_KEY = 'planner_active_sessions';
-  var HEARTBEAT_MS = 15000;
-  var EXPIRE_MS    = 45000;
+  // ▼▼▼ PASTE YOUR FIREBASE CONFIG HERE ▼▼▼
+  var FB_URL = 'https://agri-portal-3433d-default-rtdb.firebaseio.com';
+  // ▲▲▲ Replace with your actual Firebase project URL ▲▲▲
 
-  function getNow() { return Date.now(); }
+  var SESSION_KEY = 'ps_' + Math.random().toString(36).slice(2, 10);
+  var HEARTBEAT_MS = 20000;  // ping every 20s
+  var EXPIRE_MS    = 60000;  // session expires after 60s silence
 
-  async function writePing() {
-    try {
-      var raw = null;
-      try { raw = await window.storage.get(STORAGE_KEY); } catch(e) {}
-      var sessions = raw ? JSON.parse(raw.value) : {};
-      sessions[SESSION_KEY] = getNow();
-      var cutoff = getNow() - EXPIRE_MS;
-      Object.keys(sessions).forEach(function(k) {
-        if (sessions[k] < cutoff) delete sessions[k];
-      });
-      await window.storage.set(STORAGE_KEY, JSON.stringify(sessions));
-      return Object.keys(sessions).length;
-    } catch(e) { return 0; }
+  var _interval = null;
+  var _countEl  = null;
+
+  function setCount(n) {
+    if (!_countEl) _countEl = document.getElementById('live-users-count');
+    if (_countEl) _countEl.textContent = Math.max(MIN_COUNT, n);
   }
 
-  async function removeSelf() {
-    try {
-      var raw = await window.storage.get(STORAGE_KEY);
-      var sessions = raw ? JSON.parse(raw.value) : {};
-      delete sessions[SESSION_KEY];
-      await window.storage.set(STORAGE_KEY, JSON.stringify(sessions));
-    } catch(e) {}
+  // Write own heartbeat timestamp to Firebase
+  function ping() {
+    fetch(FB_URL + '/planner_sessions/' + SESSION_KEY + '.json', {
+      method: 'PUT',
+      body: JSON.stringify({ t: Date.now() })
+    }).catch(function(){});
   }
 
-  async function tick() {
-    var count = await writePing();
-    var display = Math.max(MIN_COUNT, count);
-    var el = document.getElementById('live-users-count');
-    if (el) el.textContent = display;
+  // Remove own session on tab close (best-effort)
+  function removeSelf() {
+    var url = FB_URL + '/planner_sessions/' + SESSION_KEY + '.json';
+    // Use sendBeacon for reliability on page unload
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url + '?method=DELETE', '');
+    }
+    fetch(url, { method: 'DELETE', keepalive: true }).catch(function(){});
   }
 
-  var _tickInterval = null;
+  // Read all sessions, prune stale ones, update display
+  function syncCount() {
+    fetch(FB_URL + '/planner_sessions.json')
+      .then(function(r){ return r.json(); })
+      .then(function(sessions) {
+        if (!sessions || typeof sessions !== 'object') { setCount(0); return; }
+        var now   = Date.now();
+        var alive = 0;
+        var stale = [];
+        Object.keys(sessions).forEach(function(k) {
+          var ts = sessions[k] && sessions[k].t;
+          if (ts && (now - ts) < EXPIRE_MS) {
+            alive++;
+          } else {
+            stale.push(k);
+          }
+        });
+        setCount(alive);
+        // Prune stale sessions from DB (any visitor helps clean up)
+        stale.forEach(function(k) {
+          fetch(FB_URL + '/planner_sessions/' + k + '.json', { method: 'DELETE' }).catch(function(){});
+        });
+      })
+      .catch(function(){ /* network error — keep previous count */ });
+  }
+
   function startLive() {
-    if (_tickInterval) return;
-    tick();
-    _tickInterval = setInterval(tick, HEARTBEAT_MS);
+    if (_interval) return;
+    ping();           // register immediately
+    syncCount();      // read count immediately
+    _interval = setInterval(function() {
+      ping();
+      syncCount();
+    }, HEARTBEAT_MS);
   }
 
+  // Hook into render() so live count starts when tracker opens
   var _origRender = render;
   render = function() {
     _origRender.apply(this, arguments);
@@ -999,7 +1025,9 @@ function resetTracker() {
   };
 
   window.addEventListener('beforeunload', removeSelf);
+  window.addEventListener('pagehide',     removeSelf);
 
+  // If tracker already visible on load (returning user with saved data)
   if (document.getElementById('tracker-screen') &&
       document.getElementById('tracker-screen').style.display !== 'none') {
     startLive();
